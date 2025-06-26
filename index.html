@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CloudWatch Query Builder</title>
+  <title>CloudWatch Query Generator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>CloudWatch Query Generator</h1>
-      <div class="toggles">
-        <button id="themeToggle" title="Toggle Theme">🌙 Dark</button>
-        <button id="toggleSound" title="Toggle Sound">🔊 Sound On</button>
-        <button id="copyQuery" title="Copy Query">📋 Copy</button>
-      </div>
+<body class="light">
+  <header>
+    <h1>CloudWatch Query Generator</h1>
+    <div class="controls">
+      <button id="toggleSound">🔊 Sound On</button>
+      <button id="themeToggle">🌙 Dark</button>
     </div>
+  </header>
 
+  <main>
     <label for="queryDropdown">Select Query Template:</label>
     <select id="queryDropdown">
       <option>Status Code Query</option>
@@ -26,11 +25,12 @@
     <label for="eventIds">Paste Event IDs (newline separated):</label>
     <textarea id="eventIds" rows="10" placeholder="Paste event IDs here"></textarea>
 
-    <button id="generateQuery">⚙️ Generate Query</button>
+    <button id="generateQuery">Generate Query</button>
 
     <h2>Generated Query</h2>
     <textarea id="outputQuery" rows="20" readonly></textarea>
-  </div>
+    <button id="copyQuery">📋 Copy</button>
+  </main>
 
   <audio id="clickSound" src="click.mp3" preload="auto"></audio>
   <script src="script.js"></script>
