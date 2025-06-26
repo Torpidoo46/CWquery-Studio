@@ -8,7 +8,14 @@
 </head>
 <body>
   <div class="container">
-    <h1>CloudWatch Query Generator</h1>
+    <div class="header">
+      <h1>CloudWatch Query Generator</h1>
+      <div class="toggles">
+        <button id="themeToggle" title="Toggle Theme">🌙 Dark</button>
+        <button id="toggleSound" title="Toggle Sound">🔊 Sound On</button>
+        <button id="copyQuery" title="Copy Query">📋 Copy</button>
+      </div>
+    </div>
 
     <label for="queryDropdown">Select Query Template:</label>
     <select id="queryDropdown">
@@ -19,13 +26,13 @@
     <label for="eventIds">Paste Event IDs (newline separated):</label>
     <textarea id="eventIds" rows="10" placeholder="Paste event IDs here"></textarea>
 
-    <button id="generateQuery">Generate Query</button>
-    <button id="toggleSound">🔊 Sound On</button>
+    <button id="generateQuery">⚙️ Generate Query</button>
 
     <h2>Generated Query</h2>
     <textarea id="outputQuery" rows="20" readonly></textarea>
   </div>
 
+  <audio id="clickSound" src="click.mp3" preload="auto"></audio>
   <script src="script.js"></script>
 </body>
 </html>
