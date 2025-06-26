@@ -1,1 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CloudWatch Query Builder</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="light">
+  <header>
+    <h1>🚀 CloudWatch Query Builder</h1>
+    <div class="controls">
+      <button id="themeToggle">🌓 Toggle Theme</button>
+      <button id="soundToggle">🔊 Sound</button>
+    </div>
+  </header>
+
+  <main>
+    <label for="querySelector">🧩 Select Query Template</label>
+    <select id="querySelector"></select>
+
+    <label for="eventIds">🆔 Paste Event IDs (one per line)</label>
+    <textarea id="eventIds" rows="6" placeholder="Enter event IDs..."></textarea>
+
+    <button onclick="generateQuery()">⚡ Generate Query</button>
+
+    <h2>📤 Generated Query:</h2>
+    <pre id="outputQuery"></pre>
+  </main>
+
+  <audio id="clickSound" src="click.mp3" preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
 
