@@ -9,9 +9,18 @@
 <body class="light">
   <header>
     <h1>CloudWatch Query Generator</h1>
-    <div class="controls">
-      <button id="toggleSound">🔊 Sound On</button>
-      <button id="themeToggle">🌙 Dark</button>
+    <div class="toggles">
+      <label class="toggle">
+        <input type="checkbox" id="themeToggle" />
+        <span class="slider"></span>
+        <span class="label">🌙 Dark Mode</span>
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="toggleSound" checked />
+        <span class="slider"></span>
+        <span class="label">🔊 Sound</span>
+      </label>
+      <button id="copyQuery">📋 Copy</button>
     </div>
   </header>
 
@@ -29,7 +38,6 @@
 
     <h2>Generated Query</h2>
     <textarea id="outputQuery" rows="20" readonly></textarea>
-    <button id="copyQuery">📋 Copy</button>
   </main>
 
   <audio id="clickSound" src="click.mp3" preload="auto"></audio>
