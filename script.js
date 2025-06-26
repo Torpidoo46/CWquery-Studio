@@ -1,7 +1,7 @@
 const queries = {
   "Status Code Query": `
 fields @logStream, @timestamp
-| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"' 
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
   as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
      statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
      upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
@@ -11,7 +11,7 @@ fields @logStream, @timestamp
 
   "Response Time Query": `
 fields @logStream, @timestamp
-| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"' 
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
   as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
      statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
      upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
@@ -20,19 +20,7 @@ fields @logStream, @timestamp
 | parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//`
 };
 
-let soundEnabled = true;
-const clickSound = document.getElementById("clickSound");
-
-function playClick() {
-  if (soundEnabled && clickSound) {
-    clickSound.currentTime = 0;
-    clickSound.play();
-  }
-}
-
 document.getElementById("generateQuery").addEventListener("click", () => {
-  playClick();
-
   const selectedQuery = document.getElementById("queryDropdown").value;
   const baseQuery = queries[selectedQuery] || "";
   const rawIds = document.getElementById("eventIds").value.trim();
@@ -69,30 +57,25 @@ document.getElementById("generateQuery").addEventListener("click", () => {
 
   const fullQuery = `${baseQuery}\n${finalFilter}\n${suffix}`;
   document.getElementById("outputQuery").value = fullQuery;
+
+  // Play click sound if enabled
+  const soundEnabled = document.getElementById("soundToggle").checked;
+  if (soundEnabled) {
+    const clickSound = document.getElementById("clickSound");
+    clickSound.currentTime = 0;
+    clickSound.play();
+  }
 });
 
-document.getElementById("toggleSound").addEventListener("click", () => {
-  soundEnabled = !soundEnabled;
-  playClick();
-  document.getElementById("toggleSound").textContent = soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+// Theme toggle
+document.getElementById("themeToggle").addEventListener("change", (e) => {
+  document.body.className = e.target.checked ? 'dark' : 'light';
 });
 
+// Copy query
 document.getElementById("copyQuery").addEventListener("click", () => {
-  playClick();
   const output = document.getElementById("outputQuery");
   output.select();
   document.execCommand("copy");
-  document.getElementById("copyQuery").textContent = "✅ Copied";
-  setTimeout(() => {
-    document.getElementById("copyQuery").textContent = "📋 Copy";
-  }, 2000);
-});
-
-document.getElementById("themeToggle").addEventListener("click", () => {
-  const body = document.body;
-  body.classList.toggle("dark");
-  body.classList.toggle("light");
-  const isDark = body.classList.contains("dark");
-  document.getElementById("themeToggle").textContent = isDark ? "☀️ Light" : "🌙 Dark";
-  playClick();
+  alert("Query copied to clipboard!");
 });
