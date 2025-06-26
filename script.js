@@ -10,7 +10,7 @@ fields @logStream, @timestamp
      upstreamExpires, tbc, cdn
 | filter requestMethod == "GET"
 | parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//`,
-  
+
   "Response Time Query": `
 fields @logStream, @timestamp
 | parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"' 
@@ -22,7 +22,19 @@ fields @logStream, @timestamp
 | parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//`
 };
 
+let soundEnabled = true;
+const clickSound = document.getElementById("clickSound");
+
+function playClick() {
+  if (soundEnabled && clickSound) {
+    clickSound.currentTime = 0;
+    clickSound.play();
+  }
+}
+
 document.getElementById("generateQuery").addEventListener("click", () => {
+  playClick();
+
   const selectedQuery = document.getElementById("queryDropdown").value;
   const baseQuery = queries[selectedQuery] || "";
   const rawIds = document.getElementById("eventIds").value.trim();
@@ -59,4 +71,28 @@ document.getElementById("generateQuery").addEventListener("click", () => {
 
   const fullQuery = `${baseQuery}\n${finalFilter}\n${suffix}`;
   document.getElementById("outputQuery").value = fullQuery;
+});
+
+document.getElementById("toggleSound").addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+  playClick();
+  document.getElementById("toggleSound").textContent = soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+});
+
+document.getElementById("copyQuery").addEventListener("click", () => {
+  playClick();
+  const output = document.getElementById("outputQuery");
+  output.select();
+  document.execCommand("copy");
+  document.getElementById("copyQuery").textContent = "✅ Copied";
+  setTimeout(() => {
+    document.getElementById("copyQuery").textContent = "📋 Copy";
+  }, 2000);
+});
+
+document.getElementById("themeToggle").addEventListener("click", () => {
+  document.body.classList.toggle("dark-theme");
+  const dark = document.body.classList.contains("dark-theme");
+  document.getElementById("themeToggle").textContent = dark ? "☀️ Light" : "🌙 Dark";
+  playClick();
 });
