@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CloudWatch Query Generator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -10,17 +10,17 @@
   <header>
     <h1>CloudWatch Query Generator</h1>
     <div class="toggles">
-      <label class="toggle">
-        <input type="checkbox" id="themeToggle" />
-        <span class="slider"></span>
-        <span class="label">🌙 Dark Mode</span>
+      <label class="switch">
+        <input type="checkbox" id="themeToggle">
+        <span class="slider round"></span>
       </label>
-      <label class="toggle">
-        <input type="checkbox" id="toggleSound" checked />
-        <span class="slider"></span>
-        <span class="label">🔊 Sound</span>
+      <span class="toggle-label">🌗 Theme</span>
+
+      <label class="switch">
+        <input type="checkbox" id="soundToggle" checked>
+        <span class="slider round"></span>
       </label>
-      <button id="copyQuery">📋 Copy</button>
+      <span class="toggle-label">🔊 Sound</span>
     </div>
   </header>
 
@@ -34,10 +34,12 @@
     <label for="eventIds">Paste Event IDs (newline separated):</label>
     <textarea id="eventIds" rows="10" placeholder="Paste event IDs here"></textarea>
 
-    <button id="generateQuery">Generate Query</button>
+    <button id="generateQuery">⚙️ Generate Query</button>
 
     <h2>Generated Query</h2>
-    <textarea id="outputQuery" rows="20" readonly></textarea>
+    <textarea id="outputQuery" rows="15" readonly></textarea>
+
+    <button id="copyQuery" title="Copy Query">📋 Copy Query</button>
   </main>
 
   <audio id="clickSound" src="click.mp3" preload="auto"></audio>
