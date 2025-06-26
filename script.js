@@ -1,51 +1,79 @@
-let templates = [];
-let soundEnabled = true;
+// script.js
 
-async function loadTemplates() {
-  const response = await fetch('templates.json');
-  templates = await response.json();
-  const selector = document.getElementById('querySelector');
-  templates.forEach((template, index) => {
-    const option = document.createElement('option');
-    option.value = index;
-    option.textContent = template.name;
-    selector.appendChild(option);
-  });
+const queryTemplates = {
+  "Status Code Query": `fields @logStream, @timestamp
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
+  as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
+     statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
+     upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
+     upstreamExpires, tbc, cdn
+| filter requestMethod == "GET"
+| parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//`,
+
+  "Response Time Query": `fields @logStream, @timestamp
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
+  as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
+     statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
+     upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
+     upstreamExpires, tbc, cdn
+| filter requestMethod == "GET"
+| parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//`
+};
+
+const queryDropdown = document.getElementById("queryDropdown");
+const eventIdsInput = document.getElementById("eventIds");
+const outputQuery = document.getElementById("outputQuery");
+const generateButton = document.getElementById("generateQuery");
+const toggleSound = document.getElementById("toggleSound");
+const audio = new Audio("click.mp3");
+let isSoundOn = true;
+
+toggleSound.addEventListener("click", () => {
+  isSoundOn = !isSoundOn;
+  toggleSound.textContent = isSoundOn ? "🔊 Sound On" : "🔇 Sound Off";
+});
+
+function formatEventIds(rawInput) {
+  const ids = rawInput
+    .trim()
+    .split(/\s+/)
+    .filter(id => id.length > 0)
+    .map(id => `"${id}"`)
+    .join(",\n  ");
+  return `| filter eventId in [\n  ${ids}\n]`;
 }
 
-function generateQuery() {
-  const selectedIndex = document.getElementById('querySelector').value;
-  const template = templates[selectedIndex].query;
+generateButton.addEventListener("click", () => {
+  if (isSoundOn) audio.play();
 
-  const rawInput = document.getElementById('eventIds').value.trim();
-  const ids = rawInput.split('\n').map(id => `"${id.trim()}"`).join(', ');
+  const selectedTemplate = queryTemplates[queryDropdown.value];
+  const eventFilter = formatEventIds(eventIdsInput.value);
+  let extra = "";
 
-  const finalQuery = template.replace('{{eventIds}}', ids);
-  document.getElementById('outputQuery').textContent = finalQuery;
-  playClick();
-}
-
-function playClick() {
-  if (soundEnabled) {
-    const sound = document.getElementById('clickSound');
-    sound.currentTime = 0;
-    sound.play();
+  if (queryDropdown.value === "Status Code Query") {
+    extra = `
+| parse statusCode /(?<@status2xx>2..)/ 
+| parse statusCode /(?<@status3xx>3..)/ 
+| parse statusCode /(?<@status4xx>4..)/ 
+| parse statusCode /(?<@status5xx>5..)/ 
+| stats count(@status2xx), count(@status3xx), count(@status4xx), count(@status5xx) by bin(1m) as time 
+| limit 10000`;
+  } else if (queryDropdown.value === "Response Time Query") {
+    extra = `
+| field abs(upstreamTime)*1000 as ust 
+| field abs(requestTime)*1000 as rst 
+| filter rst >= 0 
+| filter ust >= 0 
+| stats 
+    avg(ust), avg(rst), 
+    pct(ust, 95), pct(rst, 95), 
+    pct(ust, 99), pct(rst, 99), 
+    max(ust), max(rst) 
+  by bin(10s) as time 
+| order by time 
+| limit 10000`;
   }
-}
 
-document.querySelectorAll('*').forEach(el => {
-  el.addEventListener('click', playClick);
+  const finalQuery = `${selectedTemplate}\n${eventFilter}\n${extra}`;
+  outputQuery.value = finalQuery;
 });
-
-document.getElementById('soundToggle').addEventListener('click', () => {
-  soundEnabled = !soundEnabled;
-  document.getElementById('soundToggle').textContent = soundEnabled ? '🔊 Sound' : '🔇 Muted';
-});
-
-document.getElementById('themeToggle').addEventListener('click', () => {
-  document.body.classList.toggle('dark');
-  document.body.classList.toggle('light');
-});
-
-window.onload = loadTemplates;
-
