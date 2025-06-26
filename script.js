@@ -1,5 +1,3 @@
-// script.js
-
 const queries = {
   "Status Code Query": `
 fields @logStream, @timestamp
@@ -91,8 +89,10 @@ document.getElementById("copyQuery").addEventListener("click", () => {
 });
 
 document.getElementById("themeToggle").addEventListener("click", () => {
-  document.body.classList.toggle("dark-theme");
-  const dark = document.body.classList.contains("dark-theme");
-  document.getElementById("themeToggle").textContent = dark ? "☀️ Light" : "🌙 Dark";
+  const body = document.body;
+  body.classList.toggle("dark");
+  body.classList.toggle("light");
+  const isDark = body.classList.contains("dark");
+  document.getElementById("themeToggle").textContent = isDark ? "☀️ Light" : "🌙 Dark";
   playClick();
 });
