@@ -32,6 +32,13 @@ function populateQueryDropdown(templates) {
   });
 }
 
+// Format event IDs as OR conditions for the filter block
+function formatEventIdsAsOr(eventIdsArray) {
+  return eventIdsArray
+    .map(id => `eventId = "${id.replace(/"/g, '\\"')}"`)
+    .join(' or\n  ');
+}
+
 // Generate query when button clicked
 generateBtn.addEventListener('click', () => {
   const selectedIndex = queryDropdown.value;
@@ -52,7 +59,6 @@ generateBtn.addEventListener('click', () => {
     return;
   }
 
-  // Format event IDs for filter clause: eventId in ("id1", "id2", ...)
   const eventIdsArray = rawEventIds
     .split('\n')
     .map(id => id.trim())
@@ -63,9 +69,11 @@ generateBtn.addEventListener('click', () => {
     return;
   }
 
-  const formattedEventIds = `eventId in (${eventIdsArray.map(id => `"${id.replace(/"/g, '\\"')}"`).join(', ')})`;
+  // Format event IDs as OR conditions
+  const formattedEventIds = formatEventIdsAsOr(eventIdsArray);
 
-  // Replace {{eventIds}} placeholder with actual filter string
+  // Replace placeholder {{eventIds}} with formatted event IDs block
+  // Note: Your template already contains the "| filter" line before {{eventIds}}
   const finalQuery = template.query.replace('{{eventIds}}', formattedEventIds);
 
   outputTextarea.value = finalQuery;
