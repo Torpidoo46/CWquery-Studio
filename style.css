@@ -1,63 +1,104 @@
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  background: #1e1e1e;
+  background-color: #121212;
   color: #fff;
-  padding: 20px;
   transition: background 0.3s, color 0.3s;
 }
 
 body.light {
-  background: #f5f5f5;
+  background-color: #f5f5f5;
   color: #000;
 }
 
-.container {
-  max-width: 700px;
-  margin: auto;
-}
-
-.header {
+/* Top Bar */
+.top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 15px 20px;
+  background-color: #1e1e1e;
 }
 
-select, input, textarea {
+body.light .top-bar {
+  background-color: #e0e0e0;
+}
+
+.top-bar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Grid Layout */
+.grid-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: #2a2a2a;
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1;
+  min-width: 300px;
+}
+
+body.light .card {
+  background-color: #ffffff;
+  color: #000;
+}
+
+.left {
+  max-width: 45%;
+}
+
+.right {
+  max-width: 50%;
+}
+
+/* Inputs */
+select, textarea, button {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
+  font-family: inherit;
   border-radius: 5px;
   border: none;
   box-sizing: border-box;
-  font-family: inherit;
 }
 
 textarea {
-  height: 100px;
+  height: 120px;
   resize: vertical;
 }
 
 button {
-  padding: 10px 20px;
-  background: #4caf50;
+  background-color: #4caf50;
   color: white;
-  border: none;
-  border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 pre {
-  background: #333;
+  background-color: #1a1a1a;
+  color: #0f0;
   padding: 15px;
   border-radius: 5px;
   white-space: pre-wrap;
-  overflow-x: auto;
+  word-break: break-word;
 }
 
 body.light pre {
-  background: #e0e0e0;
-  color: #000;
+  background-color: #f0f0f0;
+  color: #222;
 }
 
 /* Dark Mode Toggle Switch */
@@ -67,7 +108,11 @@ body.light pre {
   width: 50px;
   height: 25px;
 }
-.switch input { display: none; }
+
+.switch input {
+  display: none;
+}
+
 .slider {
   position: absolute;
   top: 0; left: 0;
@@ -76,6 +121,7 @@ body.light pre {
   border-radius: 25px;
   transition: 0.4s;
 }
+
 .slider:before {
   position: absolute;
   content: "";
@@ -87,9 +133,11 @@ body.light pre {
   border-radius: 50%;
   transition: 0.4s;
 }
+
 input:checked + .slider {
   background-color: #4caf50;
 }
+
 input:checked + .slider:before {
   transform: translateX(24px);
 }
