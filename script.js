@@ -1,7 +1,7 @@
 const queries = {
   "Status Code Query": `
 fields @logStream, @timestamp
-| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"' 
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
   as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
      statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
      upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
@@ -11,7 +11,7 @@ fields @logStream, @timestamp
   
   "Response Time Query": `
 fields @logStream, @timestamp
-| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"' 
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
   as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
      statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
      upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
@@ -25,18 +25,16 @@ document.getElementById("generateQuery").addEventListener("click", () => {
   const baseQuery = queries[selectedQuery] || "";
   const rawIds = document.getElementById("eventIds").value.trim();
   const lines = rawIds.split(/\r?\n/).filter(id => id.trim().length > 0);
-
   const eventFilters = lines.map(id => `  eventId = "${id.trim()}"`).join(" or\n");
   const finalFilter = lines.length > 0 ? `| filter\n${eventFilters}` : "";
 
   let suffix = "";
-
   if (selectedQuery === "Status Code Query") {
     suffix = `
-| parse statusCode /(?<@status2xx>2..)/ 
-| parse statusCode /(?<@status3xx>3..)/ 
-| parse statusCode /(?<@status4xx>4..)/ 
-| parse statusCode /(?<@status5xx>5..)/ 
+| parse statusCode /(?<@status2xx>2..)/
+| parse statusCode /(?<@status3xx>3..)/
+| parse statusCode /(?<@status4xx>4..)/
+| parse statusCode /(?<@status5xx>5..)/
 | stats count(@status2xx), count(@status3xx), count(@status4xx), count(@status5xx) by bin(1m) as time
 | limit 10000`;
   } else if (selectedQuery === "Response Time Query") {
@@ -60,16 +58,8 @@ document.getElementById("generateQuery").addEventListener("click", () => {
 });
 
 document.getElementById("themeSwitch").addEventListener("change", (e) => {
-  const body = document.body;
-  if (e.target.checked) {
-    body.classList.remove("light");
-    body.classList.add("dark");
-    document.getElementById("themeLabel").innerText = "Dark";
-  } else {
-    body.classList.remove("dark");
-    body.classList.add("light");
-    document.getElementById("themeLabel").innerText = "Light";
-  }
+  document.body.classList.toggle("dark", e.target.checked);
+  document.body.classList.toggle("light", !e.target.checked);
 });
 
 document.getElementById("copyQuery").addEventListener("click", () => {
