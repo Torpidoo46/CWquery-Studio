@@ -4,68 +4,78 @@
   --text-light: #111111;
   --background-dark: #1a1a1a;
   --text-dark: #eeeeee;
+  --outer-bg: #ff6f00;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
-  font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  transition: background 0.4s, color 0.4s;
   min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  transition: background 0.4s, color 0.4s;
 }
 
-.wrapper {
-  background-color: var(--primary-color); /* 🔶 Orange outer background */
-  min-height: 100vh;
+body.light {
+  background-color: var(--outer-bg);
+  color: var(--text-light);
+}
+
+body.dark {
+  background-color: var(--outer-bg);
+  color: var(--text-dark);
+}
+
+.outer {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: 40px;
-  box-sizing: border-box;
+  align-items: center;
+  padding: 40px 20px;
 }
 
 .container {
   background: var(--background-light);
-  color: var(--text-light);
-  padding: 40px;
+  padding: 30px;
   border-radius: 12px;
+  border: 2px solid var(--primary-color);
   width: 100%;
-  max-width: 1000px;
-  box-shadow: 0 0 0 5px var(--primary-color); /* Orange border around inner box */
+  max-width: 900px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 body.dark .container {
   background: var(--background-dark);
-  color: var(--text-dark);
 }
 
-label {
-  font-weight: bold;
-  margin-top: 10px;
+h1 {
+  margin: 0 0 20px 0;
+}
+
+label, select, textarea, button {
   display: block;
-}
-
-select,
-textarea,
-button {
   width: 100%;
-  margin-top: 10px;
-  padding: 12px;
+  margin-top: 15px;
   font-size: 16px;
-  border: 2px solid var(--primary-color);
-  border-radius: 8px;
-  box-sizing: border-box;
 }
 
 textarea {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--primary-color);
   resize: vertical;
-  min-height: 120px;
+  min-height: 100px;
 }
 
 button {
   background-color: var(--primary-color);
-  color: #fff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 15px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -74,23 +84,23 @@ button:hover {
   opacity: 0.9;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggles {
+  display: flex;
+  gap: 10px;
+}
+
 #outputQuery {
-  height: 400px;
-  resize: vertical;
+  background: #fff8f0;
+  color: #000;
 }
 
-body.dark select,
-body.dark textarea,
 body.dark #outputQuery {
-  background-color: #333;
+  background: #333;
   color: #fff;
-}
-
-h1, h2 {
-  margin-top: 0;
-}
-
-body.dark button {
-  background-color: #ff6f00;
-  color: white;
 }
