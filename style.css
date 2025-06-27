@@ -19,7 +19,7 @@ body {
 }
 
 body.light {
-  background-color: var(--background-light);
+  background-color: #ff6f00; /* Bold orange */
   color: var(--text-light);
 }
 
@@ -34,6 +34,7 @@ body.dark {
   padding: 30px 20px;
   min-height: 100vh;
   box-sizing: border-box;
+  background-color: inherit; /* Inherit from body */
 }
 
 .header {
@@ -134,11 +135,18 @@ select, textarea, button {
 }
 
 textarea {
+  min-height: 250px;
   resize: vertical;
   padding: 10px;
   font-size: 14px;
   box-sizing: border-box;
+}
+
+#outputQuery {
+  flex-grow: 1;
   min-height: 250px;
+  margin-top: 12px;
+  resize: vertical;
 }
 
 button {
@@ -155,43 +163,23 @@ button:hover {
   opacity: 0.9;
 }
 
-.output-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
 .output-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid #ddd;
+  margin-bottom: 6px;
+  width: 100%;
 }
 
 #copyQuery {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  font-size: 14px;
+  width: auto;
+  padding: 10px 18px;
   border-radius: 6px;
-  cursor: pointer;
-}
-
-#copyQuery:hover {
-  opacity: 0.9;
-}
-
-#outputQuery {
-  flex-grow: 1;
-  min-height: 320px;
-  resize: vertical;
-  margin-top: 10px;
+  font-size: 18px;
 }
 
 /* ───────────── Command Guide Styles ───────────── */
+
 .command-guide {
   position: relative;
   display: inline-block;
