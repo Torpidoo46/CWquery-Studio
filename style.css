@@ -1,5 +1,6 @@
 :root {
   --primary-color: #ff6f00;
+  --guide-color: #28a745; /* Green for Command Guide */
   --background-light: #ffffff;
   --text-light: #111111;
   --background-dark: #1a1a1a;
@@ -19,7 +20,7 @@ body {
 }
 
 body.light {
-  background-color: #ff6f00; /* Bold orange */
+  background-color: var(--background-light);
   color: var(--text-light);
 }
 
@@ -34,7 +35,6 @@ body.dark {
   padding: 30px 20px;
   min-height: 100vh;
   box-sizing: border-box;
-  background-color: inherit; /* Inherit from body */
 }
 
 .header {
@@ -192,7 +192,7 @@ button:hover {
   font-weight: bold;
   cursor: pointer;
   padding: 10px 16px;
-  background-color: var(--primary-color);
+  background-color: var(--guide-color); /* Green */
   color: white;
   border-radius: 10px;
   list-style: none;
@@ -218,7 +218,7 @@ button:hover {
   overflow-y: auto;
   background-color: white;
   padding: 20px;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--guide-color);
   border-top: none;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -231,21 +231,4 @@ body.dark .guide-content {
 }
 
 .guide-content h4 {
-  margin: 10px 0 4px;
-  color: var(--primary-color);
-  font-weight: bold;
-}
-
-.guide-content code {
-  display: block;
-  background: #f3f3f3;
-  padding: 6px 10px;
-  border-radius: 6px;
-  margin-bottom: 14px;
-  font-family: monospace;
-  word-wrap: break-word;
-}
-
-body.dark .guide-content code {
-  background: #444;
-}
+  margin: 1
