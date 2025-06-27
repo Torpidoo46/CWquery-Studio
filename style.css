@@ -23,13 +23,19 @@ body.light {
   margin-bottom: 20px;
 }
 
-select, input {
+select, input, textarea {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
   border: none;
   box-sizing: border-box;
+  font-family: inherit;
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
 }
 
 button {
@@ -87,4 +93,3 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(24px);
 }
-
