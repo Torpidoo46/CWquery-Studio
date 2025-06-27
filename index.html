@@ -1,122 +1,69 @@
-<header class="header" role="banner">
-  <h1>CWquery Studio</h1>
-  <div class="guide-and-theme" role="region" aria-label="Command Guide and Theme Toggle">
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CWquery Studio</title>
+  <link rel="stylesheet" href="style.css?v=2" />
+</head>
+<body>
+  <div class="main-container">
+    <header class="header" role="banner">
+      <h1>CWquery Studio</h1>
+      <div class="guide-and-theme" role="region" aria-label="Command Guide and Theme Toggle">
+        <details class="command-guide">
+          <summary>Command Guide</summary>
+          <div class="guide-content">
+            <h4>fields</h4>
+            <p>Retrieve one or more log fields using functions and operations.</p>
+            <code>fields @log, @logStream, @message, @timestamp</code>
 
-    <!-- Command Guide Dropdown -->
-    <div class="command-guide-dropdown">
-      <button id="commandGuideToggle" aria-haspopup="true" aria-expanded="false" aria-controls="commandGuideList" type="button">
-        Command Guide ▼
-      </button>
-      <div id="commandGuideList" class="command-guide-list" role="list" aria-label="Command Guide" hidden>
-        <button class="close-guide" aria-label="Close Command Guide" type="button">&times;</button>
+            <h4>filter</h4>
+            <p>Retrieve log fields based on one or more conditions.</p>
+            <code>filter @message like /(?i)(Exception|error|fail|5dd)/</code>
 
-        <!-- Command Items -->
-        <div class="command-item" role="listitem">
-          <h4>fields</h4>
-          <p>Retrieve one or more log fields. You can also use functions and operations such as abs(a+b), sqrt(a/b), log(a)+log(b), strlen(trim()), datefloor(), isPresent(), and others in this command.</p>
-          <pre><code>fields @log, @logStream, @message, @timestamp</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
-        </div>
+            <h4>stats</h4>
+            <p>Calculate aggregate statistics such as count(), avg(), etc.</p>
+            <code>stats count() by bin(5m)</code>
+          </div>
+        </details>
 
-        <div class="command-item" role="listitem">
-          <h4>filter</h4>
-          <p>Retrieve log fields based on one or more conditions. You can use comparison operators such as =, !=, &gt;, &gt;=, &lt;, &lt;=, boolean operators such as and, or, and not, and regular expressions in this command.</p>
-          <pre><code>filter @message like /(?i)(Exception|error|fail|5dd)/</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
-        </div>
-
-        <div class="command-item" role="listitem">
-          <h4>filterIndex - new</h4>
-          <p>Only supported in Standard log class. Limit the query to indexed data only using the specified field index.</p>
-          <pre><code>filterIndex field_index = value</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
-        </div>
-
-        <div class="command-item" role="listitem">
-          <h4>stats</h4>
-          <p>Calculate aggregate statistics such as sum(), avg(), count(), min() and max() for log fields.</p>
-          <pre><code>stats count() by bin(5m)</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
-        </div>
-
-        <div class="command-item" role="listitem">
-          <p>Calculate additional aggregate statistics on the output of the first stats command.</p>
-          <pre><code>fields strlen(@message) as message_length
-| stats sum(message_length) as logs_bytes by bin(5m)
-| stats avg(logs_bytes)</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
-        </div>
-
-        <div class="command-item" role="listitem">
-          <h4>sort</h4>
-          <p>Sort the log fields in ascending or descending order.</p>
-          <pre><code>sort @timestamp asc</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
-        </div>
-
-        <div class="command-item" role="listitem">
-          <h4>limit</h4>
-          <p>Limit the number of log events returned by a query.</p>
-          <pre><code>limit 10</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
-        </div>
-
-        <div class="command-item" role="listitem">
-          <h4>parse</h4>
-          <p>Create one or more ephemeral fields, which can be further processed by the query. The following example will extract the ephemeral fields host, identity, dateTimeString, httpVerb, url, protocol, statusCode, bytes from @message, and return the url, max(bytes), and avg(bytes) fields sorted by max(bytes) in descending order.</p>
-          <pre><code>parse '* - * [*] "* * *" * *' as host, identity, dateTimeString, httpVerb, url, protocol, statusCode, bytes
-| stats max(bytes) as maxBytes, avg(bytes) by url
-| sort maxBytes desc</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
-        </div>
-
-        <div class="command-item" role="listitem">
-          <h4>dedup</h4>
-          <p>Dedup operator removes duplicate results based on provided fields.</p>
-          <pre><code>dedup @logstream, @timestamp</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
-        </div>
-
-        <div class="command-item" role="listitem">
-          <h4>pattern</h4>
-          <p>Only supported in Standard log class. Identify patterns and collapses logs into groups with a similar structure. Pattern can be used in combination with the filter command or on an ephemeral field extracted via the parse command.</p>
-          <pre><code>filter @message like /ERROR/
-| pattern @message</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
-        </div>
-
-        <div class="command-item" role="listitem">
-          <h4>diff</h4>
-          <p>Only supported in Standard log class. Compare changes in patterns of two time ranges. Identify what new patterns occurred, what patterns are no longer present, and how the count of logs matching a pattern changed.</p>
-          <pre><code>fields @message
-| pattern @message
-| diff</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
-        </div>
-
-        <div class="command-item" role="listitem">
-          <h4>unnest - new</h4>
-          <p>Flatten a list into multiple records.</p>
-          <pre><code>unnest field into unnested_field</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
-        </div>
-
-        <div class="command-item" role="listitem">
-          <p>Flatten the list in a JSON message.</p>
-          <pre><code>fields jsonParse(@message) as json_message
-| unnest json_message.events into event</code></pre>
-          <button class="apply-btn" type="button">Apply</button>
+        <div class="theme-toggle" role="region" aria-label="Toggle Dark Mode">
+          <label class="switch" for="themeSwitch">
+            <input type="checkbox" id="themeSwitch" aria-checked="false" role="switch" />
+            <span class="slider"></span>
+          </label>
+          <span>Dark Mode</span>
         </div>
       </div>
-    </div>
+    </header>
 
-    <!-- Dark Mode Toggle -->
-    <div class="theme-toggle" role="region" aria-label="Toggle Dark Mode">
-      <label class="switch" for="themeSwitch">
-        <input type="checkbox" id="themeSwitch" aria-checked="false" role="switch" />
-        <span class="slider"></span>
-      </label>
-      <span>Dark Mode</span>
-    </div>
+    <main class="grid" role="main">
+      <section class="card controls-card" aria-labelledby="queryTemplateLabel">
+        <label id="queryTemplateLabel" for="queryDropdown">Select Query Template:</label>
+        <select id="queryDropdown" aria-describedby="queryTemplateDesc" aria-required="true">
+          <option value="" disabled selected>Select a template</option>
+          <!-- Templates populated dynamically -->
+        </select>
+        <small id="queryTemplateDesc" class="sr-only">Choose a query template to generate your query.</small>
+
+        <label for="eventIds">Paste Event IDs (newline separated):</label>
+        <textarea id="eventIds" placeholder="Enter event IDs, one per line" rows="6" aria-required="true"></textarea>
+
+        <button id="generateQuery" type="button" aria-live="polite">Generate Query</button>
+      </section>
+
+      <section class="card output-card" aria-labelledby="generatedQueryLabel">
+        <div class="output-header">
+          <h2 id="generatedQueryLabel">Generated Query</h2>
+          <button id="copyQuery" type="button" aria-label="Copy generated query to clipboard">📋 Copy Query</button>
+        </div>
+        <textarea id="outputQuery" readonly aria-live="polite" rows="12" spellcheck="false" aria-describedby="outputDesc"></textarea>
+        <small id="outputDesc" class="sr-only">This area displays the generated query based on your inputs.</small>
+      </section>
+    </main>
   </div>
-</header>
+
+  <script src="script.js"></script>
+</body>
+</html>
