@@ -10,12 +10,66 @@
   <div class="main-container">
     <div class="header">
       <h1>Cloudwatch Query Studio</h1>
-      <div class="theme-toggle">
-        <label class="switch">
-          <input type="checkbox" id="themeSwitch">
-          <span class="slider"></span>
-        </label>
-        <span>Dark Mode</span>
+      <div>
+        <!-- Query Command Guide Dropdown -->
+        <details class="command-guide">
+          <summary><strong>Query Command Guide</strong></summary>
+          <div class="command-list">
+            <details><summary><strong>fields</strong></summary>
+              <p>Retrieve one or more log fields. Supports functions like abs(), sqrt(), strlen(), etc.</p>
+              <code>fields @log, @logStream, @message, @timestamp</code>
+            </details>
+            <details><summary><strong>filter</strong></summary>
+              <p>Retrieve logs based on conditions with operators or regex.</p>
+              <code>filter @message like /(?i)(Exception|error|fail|5dd)/</code>
+            </details>
+            <details><summary><strong>filterIndex</strong></summary>
+              <p>Limit query to indexed data only.</p>
+              <code>filterIndex field_index = value</code>
+            </details>
+            <details><summary><strong>stats</strong></summary>
+              <p>Calculate aggregate statistics like count(), sum(), avg().</p>
+              <code>stats count() by bin(5m)</code>
+            </details>
+            <details><summary><strong>sort</strong></summary>
+              <p>Sort results by a field.</p>
+              <code>sort @timestamp asc</code>
+            </details>
+            <details><summary><strong>limit</strong></summary>
+              <p>Limit number of log events returned.</p>
+              <code>limit 10</code>
+            </details>
+            <details><summary><strong>parse</strong></summary>
+              <p>Create fields from message patterns.</p>
+              <code>parse '* - * [*] "* * *" * *' as host, identity, ...</code>
+            </details>
+            <details><summary><strong>dedup</strong></summary>
+              <p>Remove duplicate log entries.</p>
+              <code>dedup @logstream, @timestamp</code>
+            </details>
+            <details><summary><strong>pattern</strong></summary>
+              <p>Identify and collapse similar logs.</p>
+              <code>pattern @message</code>
+            </details>
+            <details><summary><strong>diff</strong></summary>
+              <p>Compare log pattern changes across time.</p>
+              <code>diff</code>
+            </details>
+            <details><summary><strong>unnest</strong></summary>
+              <p>Flatten a list or JSON array.</p>
+              <code>unnest field into unnested_field</code>
+            </details>
+          </div>
+        </details>
+
+        <!-- Theme Toggle -->
+        <div class="theme-toggle">
+          <label class="switch">
+            <input type="checkbox" id="themeSwitch">
+            <span class="slider"></span>
+          </label>
+          <span>Dark Mode</span>
+        </div>
       </div>
     </div>
 
