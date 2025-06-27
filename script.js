@@ -59,13 +59,11 @@ document.getElementById("generateQuery").addEventListener("click", () => {
   document.getElementById("outputQuery").value = fullQuery;
 });
 
-// Theme toggle
 document.getElementById("themeToggle").addEventListener("change", (e) => {
   document.body.classList.toggle("dark", e.target.checked);
   document.body.classList.toggle("light", !e.target.checked);
 });
 
-// Copy query to clipboard
 document.getElementById("copyQuery").addEventListener("click", () => {
   const output = document.getElementById("outputQuery");
   output.select();
