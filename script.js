@@ -1,4 +1,3 @@
-// Query Templates
 const templates = {
   "Status Code Query": `fields @logStream, @timestamp
 | parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
@@ -41,7 +40,6 @@ const templates = {
 | limit 10000`
 };
 
-// Command Guide
 const commandGuide = {
   "fields": "Retrieve one or more log fields. Supports functions like abs(), sqrt(), etc.",
   "filter": "Retrieve log fields based on conditions. Supports =, !=, >, regex, etc.",
@@ -56,7 +54,6 @@ const commandGuide = {
   "unnest": "Flatten a list into multiple records from a JSON message."
 };
 
-// Populate dropdowns on load
 window.onload = function () {
   const templateSelect = document.getElementById("templateSelect");
   Object.keys(templates).forEach(key => {
@@ -66,24 +63,33 @@ window.onload = function () {
     templateSelect.appendChild(option);
   });
 
-  const guideSelect = document.getElementById("commandGuide");
-  Object.entries(commandGuide).forEach(([key, desc]) => {
-    const option = document.createElement("option");
-    option.value = desc;
-    option.textContent = key;
-    guideSelect.appendChild(option);
-  });
-
-  guideSelect.addEventListener("change", function () {
-    alert(this.value);
+  document.getElementById("guideToggle").addEventListener("click", () => {
+    const box = document.getElementById("guideBox");
+    box.classList.toggle("hidden");
+    if (!box.classList.contains("loaded")) {
+      box.innerHTML = Object.entries(commandGuide)
+        .map(([cmd, desc]) => `<strong>${cmd}</strong>: ${desc}`)
+        .join("<br><br>");
+      box.classList.add("loaded");
+    }
   });
 
   document.getElementById("darkModeToggle").addEventListener("change", function () {
     document.body.classList.toggle("light");
   });
+
+  document.getElementById("copyBtn").addEventListener("click", () => {
+    const output = document.getElementById("outputQuery").innerText;
+    if (!output) {
+      alert("No query to copy.");
+      return;
+    }
+    navigator.clipboard.writeText(output).then(() => {
+      alert("Query copied to clipboard!");
+    });
+  });
 };
 
-// Generate Query Logic
 function generateQuery() {
   const selectedTemplate = document.getElementById("templateSelect").value;
   const input = document.getElementById("eventInput").value.trim();
