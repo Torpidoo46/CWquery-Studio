@@ -1,144 +1,102 @@
 :root {
-  --primary-color: #ff6f00;
-  --background-light: #ffffff;
-  --text-light: #111111;
-  --background-dark: #121212;
-  --text-dark: #eeeeee;
+  --primary: #ff6f00;
+  --light-bg: #fff;
+  --dark-bg: #1a1a1a;
+  --light-text: #111;
+  --dark-text: #eee;
 }
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  transition: background 0.4s, color 0.4s;
   margin: 0;
   padding: 20px;
+  transition: background 0.3s, color 0.3s;
 }
 
 body.light {
-  background: var(--background-light);
-  color: var(--text-light);
+  background: var(--light-bg);
+  color: var(--light-text);
 }
 
 body.dark {
-  background: var(--background-dark);
-  color: var(--text-dark);
+  background: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  border: 2px solid var(--primary);
+  padding: 30px;
+  border-radius: 12px;
 }
 
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 10px;
-  border-bottom: 2px solid var(--primary-color);
+  margin-bottom: 20px;
 }
 
-.toggles {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.toggle-label {
-  font-size: 14px;
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-/* Futuristic Switch */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 24px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  background-color: #ccc;
-  transition: 0.4s;
-  border-radius: 34px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  border-radius: 50%;
-  transition: 0.4s;
-}
-
-input:checked + .slider {
-  background-color: var(--primary-color);
-}
-
-input:checked + .slider:before {
-  transform: translateX(26px);
-}
-
-main {
-  margin-top: 30px;
-  background: rgba(255, 111, 0, 0.05);
-  padding: 20px;
-  border-radius: 12px;
-  border: 2px solid var(--primary-color);
-}
-
-textarea, select {
-  width: 100%;
-  margin-top: 10px;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  border: 1px solid var(--primary-color);
-  outline: none;
-}
-
-textarea {
-  resize: vertical;
-}
-
-button {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
+.toggles button {
+  margin-left: 10px;
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
   border-radius: 6px;
-  font-size: 14px;
+  padding: 8px 12px;
   cursor: pointer;
   font-weight: bold;
   transition: background 0.3s;
 }
 
-button:hover {
-  background-color: #e65c00;
-}
-
-#copyQuery {
-  display: block;
-  width: auto;
-  margin-top: 8px;
-}
-
-body.dark textarea, body.dark select {
-  background: #333;
+.toggles button:hover {
+  background: var(--primary);
   color: #fff;
 }
 
-body.dark main {
-  background: rgba(255, 111, 0, 0.1);
+main {
+  border: 2px dashed var(--primary);
+  padding: 20px;
+  border-radius: 10px;
+  background: rgba(255, 111, 0, 0.02);
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+select,
+textarea,
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1.5px solid var(--primary);
+  font-size: 14px;
+  outline: none;
+}
+
+textarea[readonly] {
+  background: #fff8f0;
+}
+
+body.dark textarea[readonly] {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+button {
+  background: var(--primary);
+  color: white;
+  font-weight: bold;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
 }
