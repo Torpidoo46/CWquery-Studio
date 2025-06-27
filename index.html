@@ -2,37 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Query Generator</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CWquery Studio</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body class="dark">
-  <div class="container">
-    <div class="header">
-      <h1>Query Generator</h1>
+  <header class="top-bar">
+    <h1>CWquery Studio</h1>
+    <div class="top-right">
+      <select id="commandGuide">
+        <option value="">📘 Command Guide ▾</option>
+      </select>
       <label class="switch">
         <input type="checkbox" id="darkModeToggle" checked />
         <span class="slider round"></span>
       </label>
     </div>
+  </header>
 
-    <label for="templateSelect">Choose a Query Template:</label>
-    <select id="templateSelect"></select>
+  <main class="grid-container">
+    <section class="card left">
+      <h2>📝 Query Builder</h2>
 
-    <label for="eventInput">Enter Event ID(s):</label>
-    <textarea id="eventInput" placeholder="Enter one ID per line or comma-separated..."></textarea>
+      <label for="templateSelect">⬇️ Select Template:</label>
+      <select id="templateSelect"></select>
 
-    <label for="commandGuide">Command Guide:</label>
-    <select id="commandGuide">
-      <option value="">-- Select a command --</option>
-    </select>
-    <p id="commandDescription"></p>
+      <label for="eventInput">🆔 Event IDs:</label>
+      <textarea id="eventInput" placeholder="Enter one per line or comma-separated..."></textarea>
 
-    <button onclick="generateQuery()">Generate Query</button>
+      <button onclick="generateQuery()">🔘 Generate Query</button>
+    </section>
 
-    <h3>Generated Query:</h3>
-    <pre id="outputQuery"></pre>
-  </div>
+    <section class="card right">
+      <h2>🧾 Generated Query</h2>
+      <pre id="outputQuery"></pre>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>
