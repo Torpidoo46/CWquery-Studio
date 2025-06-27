@@ -1,7 +1,7 @@
 const queries = {
   "Status Code Query": `
 fields @logStream, @timestamp
-| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"' 
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
   as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
      statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
      upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
@@ -11,7 +11,7 @@ fields @logStream, @timestamp
 
   "Response Time Query": `
 fields @logStream, @timestamp
-| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"' 
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
   as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
      statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
      upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
@@ -60,14 +60,15 @@ document.getElementById("generateQuery").addEventListener("click", () => {
 });
 
 // Theme toggle
-document.getElementById('themeToggle').addEventListener('change', (e) => {
-  document.body.classList.toggle('dark', e.target.checked);
+document.getElementById("themeToggle").addEventListener("change", (e) => {
+  const isDark = e.target.checked;
+  document.body.className = isDark ? "dark" : "light";
 });
 
-// Copy query to clipboard
-document.getElementById("copyIcon").addEventListener("click", () => {
-  const queryText = document.getElementById("outputQuery").value;
-  navigator.clipboard.writeText(queryText).then(() => {
-    alert("Query copied to clipboard!");
-  });
+// Copy to clipboard
+document.getElementById("copyQueryBtn").addEventListener("click", () => {
+  const output = document.getElementById("outputQuery");
+  output.select();
+  output.setSelectionRange(0, 99999);
+  document.execCommand("copy");
 });
