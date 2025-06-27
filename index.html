@@ -3,46 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CloudWatch Query Generator</title>
+  <title>CloudWatch Query Builder</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="light">
-  <header>
-    <h1>CloudWatch Query Generator</h1>
-    <div class="toggles">
-      <label class="switch">
-        <input type="checkbox" id="themeToggle">
-        <span class="slider round"></span>
-      </label>
-      <span class="toggle-label">🌗 Theme</span>
+  <div class="container">
+    <header>
+      <h1>CloudWatch Query Generator</h1>
+      <div class="toggles">
+        <button id="toggleTheme">🌓 Toggle Theme</button>
+        <button id="toggleSound">🔊 Sound On</button>
+      </div>
+    </header>
 
-      <label class="switch">
-        <input type="checkbox" id="soundToggle" checked>
-        <span class="slider round"></span>
-      </label>
-      <span class="toggle-label">🔊 Sound</span>
-    </div>
-  </header>
+    <main>
+      <label for="queryDropdown">Select Query Template:</label>
+      <select id="queryDropdown">
+        <option>Status Code Query</option>
+        <option>Response Time Query</option>
+      </select>
 
-  <main>
-    <label for="queryDropdown">Select Query Template:</label>
-    <select id="queryDropdown">
-      <option>Status Code Query</option>
-      <option>Response Time Query</option>
-    </select>
+      <label for="eventIds">Paste Event IDs (newline separated):</label>
+      <textarea id="eventIds" rows="10" placeholder="Paste event IDs here"></textarea>
 
-    <label for="eventIds">Paste Event IDs (newline separated):</label>
-    <textarea id="eventIds" rows="10" placeholder="Paste event IDs here"></textarea>
+      <button id="generateQuery">⚙️ Generate Query</button>
 
-    <button id="generateQuery">⚙️ Generate Query</button>
+      <h2>Generated Query</h2>
+      <textarea id="outputQuery" rows="20" readonly></textarea>
 
-    <h2>Generated Query</h2>
-    <textarea id="outputQuery" rows="15" readonly></textarea>
+      <button id="copyQuery">📋 Copy Query</button>
+    </main>
+  </div>
 
-    <button id="copyQuery" title="Copy Query">📋 Copy Query</button>
-  </main>
-
-  <audio id="clickSound" src="click.mp3" preload="auto"></audio>
+  <!-- click.mp3 must be in same directory or adjust path in script.js -->
   <script src="script.js"></script>
 </body>
 </html>
