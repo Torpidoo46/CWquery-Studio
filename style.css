@@ -34,17 +34,18 @@ body.dark {
   justify-content: center;
   align-items: center;
   padding: 40px 20px;
+  min-height: 100vh;
 }
+
 .container {
   background: var(--background-light);
   padding: 30px;
   border-radius: 12px;
   border: 2px solid var(--primary-color);
   width: 100%;
-  max-width: 1200px; /* Increased from 900px */
+  max-width: 900px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-
 
 body.dark .container {
   background: var(--background-dark);
@@ -88,6 +89,8 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .toggles {
