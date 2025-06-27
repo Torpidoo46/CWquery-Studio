@@ -8,6 +8,10 @@
   --card-bg-dark: #2a2a2a;
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -122,6 +126,7 @@ select, textarea, button {
   border-radius: 6px;
   font-size: 14px;
   border: 1px solid var(--primary-color);
+  box-sizing: border-box;
 }
 
 textarea {
@@ -146,6 +151,10 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 30px;
+  margin-bottom: 6px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 #copyQuery {
