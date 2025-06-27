@@ -8,19 +8,21 @@
   --card-bg-dark: #2a2a2a;
 }
 
+/* Background Image Setup */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
   transition: background 0.3s, color 0.3s;
+  background: url('https://cdn.pixabay.com/photo/2023/10/17/14/15/digital-8280790_1280.jpg') no-repeat center center fixed;
+  background-size: cover;
 }
 
+/* Light & Dark Theme Text */
 body.light {
-  background-color: var(--background-light);
   color: var(--text-light);
 }
 
 body.dark {
-  background-color: var(--background-dark);
   color: var(--text-dark);
 }
 
