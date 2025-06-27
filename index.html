@@ -3,19 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CloudWatch Query Builder</title>
+  <title>CloudWatch Query Generator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="light">
   <div class="container">
-    <div class="header">
+    <div class="top-bar">
       <h1>CloudWatch Query Generator</h1>
-      <div class="toggles">
-        <label class="theme-switch">
-          <input type="checkbox" id="themeToggle" />
-          🌙
-        </label>
-      </div>
+      <label class="switch">
+        <input type="checkbox" id="themeToggle">
+        <span class="slider"></span>
+      </label>
     </div>
 
     <label for="queryDropdown">Select Query Template:</label>
@@ -29,10 +27,11 @@
 
     <button id="generateQuery">Generate Query</button>
 
-    <div class="query-header">
+    <div class="output-header">
       <h2>Generated Query</h2>
-      <button class="copy-btn" id="copyQueryBtn" title="Copy Query">📋</button>
+      <button id="copyQueryBtn" title="Copy to Clipboard">📋 Copy</button>
     </div>
+
     <textarea id="outputQuery" rows="20" readonly></textarea>
   </div>
 
