@@ -163,3 +163,8 @@ button:hover {
   border-radius: 4px;
   font-size: 18px;
 }
+#outputQuery {
+  min-height: 200px; /* Adjust to your preference */
+  resize: vertical;
+}
+
