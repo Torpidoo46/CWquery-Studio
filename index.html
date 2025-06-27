@@ -3,39 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CWquery Studio</title>
+  <title>Query Generator Tool</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body class="dark">
   <header class="top-bar">
-    <h1>CWquery Studio</h1>
+    <h1>🔍 Query Generator Tool</h1>
     <div class="top-right">
-      <select id="commandGuide">
-        <option value="">📘 Command Guide ▾</option>
-      </select>
-      <label class="switch">
-        <input type="checkbox" id="darkModeToggle" checked />
-        <span class="slider round"></span>
+      <div class="command-guide">
+        <button id="guideToggle">📘 Command Guide ▾</button>
+        <div id="guideBox" class="hidden"></div>
+      </div>
+      <label class="dark-label">
+        🌙 Dark Mode
+        <label class="switch">
+          <input type="checkbox" id="darkModeToggle" checked />
+          <span class="slider round"></span>
+        </label>
       </label>
     </div>
   </header>
-
-  <main class="grid-container">
-    <section class="card left">
-      <h2>📝 Query Builder</h2>
-
-      <label for="templateSelect">⬇️ Select Template:</label>
+      <label for="templateSelect">Select Query Template:</label>
       <select id="templateSelect"></select>
 
-      <label for="eventInput">🆔 Event IDs:</label>
-      <textarea id="eventInput" placeholder="Enter one per line or comma-separated..."></textarea>
+      <label for="eventInput">Event ID's:</label>
+      <textarea id="eventInput" placeholder="Enter one per line"></textarea>
 
-      <button onclick="generateQuery()">🔘 Generate Query</button>
+      <button onclick="generateQuery()">Generate Query</button>
     </section>
 
     <section class="card right">
-      <h2>🧾 Generated Query</h2>
+      <h2>Generated Query</h2>
       <pre id="outputQuery"></pre>
+      <button id="copyBtn">📋 Copy Query</button>
     </section>
   </main>
 
