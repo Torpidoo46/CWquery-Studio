@@ -3,73 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title></title>
+  <title>Cloudwatch Query Studio</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="light">
   <div class="main-container">
     <div class="header">
-      <h1>Cloudwatch Query Studio</h1>
       <div>
-        <!-- Query Command Guide Dropdown -->
+        <h1>Cloudwatch Query Studio</h1>
+
+        <!-- Query Command Guide -->
         <details class="command-guide">
-          <summary><strong>Query Command Guide</strong></summary>
-          <div class="command-list">
-            <details><summary><strong>fields</strong></summary>
-              <p>Retrieve one or more log fields. Supports functions like abs(), sqrt(), strlen(), etc.</p>
-              <code>fields @log, @logStream, @message, @timestamp</code>
-            </details>
-            <details><summary><strong>filter</strong></summary>
-              <p>Retrieve logs based on conditions with operators or regex.</p>
-              <code>filter @message like /(?i)(Exception|error|fail|5dd)/</code>
-            </details>
-            <details><summary><strong>filterIndex</strong></summary>
-              <p>Limit query to indexed data only.</p>
-              <code>filterIndex field_index = value</code>
-            </details>
-            <details><summary><strong>stats</strong></summary>
-              <p>Calculate aggregate statistics like count(), sum(), avg().</p>
-              <code>stats count() by bin(5m)</code>
-            </details>
-            <details><summary><strong>sort</strong></summary>
-              <p>Sort results by a field.</p>
-              <code>sort @timestamp asc</code>
-            </details>
-            <details><summary><strong>limit</strong></summary>
-              <p>Limit number of log events returned.</p>
-              <code>limit 10</code>
-            </details>
-            <details><summary><strong>parse</strong></summary>
-              <p>Create fields from message patterns.</p>
-              <code>parse '* - * [*] "* * *" * *' as host, identity, ...</code>
-            </details>
-            <details><summary><strong>dedup</strong></summary>
-              <p>Remove duplicate log entries.</p>
-              <code>dedup @logstream, @timestamp</code>
-            </details>
-            <details><summary><strong>pattern</strong></summary>
-              <p>Identify and collapse similar logs.</p>
-              <code>pattern @message</code>
-            </details>
-            <details><summary><strong>diff</strong></summary>
-              <p>Compare log pattern changes across time.</p>
-              <code>diff</code>
-            </details>
-            <details><summary><strong>unnest</strong></summary>
-              <p>Flatten a list or JSON array.</p>
-              <code>unnest field into unnested_field</code>
-            </details>
+          <summary>📘 Query Command Guide</summary>
+          <div class="guide-content">
+            <h4>fields</h4>
+            <p>Retrieve one or more log fields using functions and operations.</p>
+            <code>fields @log, @logStream, @message, @timestamp</code>
+
+            <h4>filter</h4>
+            <p>Retrieve log fields based on one or more conditions.</p>
+            <code>filter @message like /(?i)(Exception|error|fail|5dd)/</code>
+
+            <h4>filterIndex</h4>
+            <p>Limit query to indexed data only using specified field index.</p>
+            <code>filterIndex field_index = value</code>
+
+            <h4>stats</h4>
+            <p>Calculate aggregate statistics such as count(), avg(), etc.</p>
+            <code>stats count() by bin(5m)</code>
+
+            <h4>sort</h4>
+            <p>Sort the log fields in ascending or descending order.</p>
+            <code>sort @timestamp asc</code>
+
+            <h4>limit</h4>
+            <p>Limit the number of log events returned by a query.</p>
+            <code>limit 10</code>
+
+            <h4>parse</h4>
+            <p>Create ephemeral fields for further processing in query.</p>
+            <code>parse '* - * [*] "* * *" * *' as host, identity, etc.</code>
+
+            <h4>dedup</h4>
+            <p>Removes duplicate results based on provided fields.</p>
+            <code>dedup @logstream, @timestamp</code>
+
+            <h4>pattern</h4>
+            <p>Identify and collapse logs into structural patterns.</p>
+            <code>filter @message like /ERROR/ | pattern @message</code>
+
+            <h4>diff</h4>
+            <p>Compare changes in patterns between time ranges.</p>
+            <code>fields @message | pattern @message | diff</code>
+
+            <h4>unnest</h4>
+            <p>Flatten a list into multiple records.</p>
+            <code>unnest field into unnested_field</code>
           </div>
         </details>
+      </div>
 
-        <!-- Theme Toggle -->
-        <div class="theme-toggle">
-          <label class="switch">
-            <input type="checkbox" id="themeSwitch">
-            <span class="slider"></span>
-          </label>
-          <span>Dark Mode</span>
-        </div>
+      <!-- Theme toggle -->
+      <div class="theme-toggle">
+        <label class="switch">
+          <input type="checkbox" id="themeSwitch">
+          <span class="slider"></span>
+        </label>
+        <span>Dark Mode</span>
       </div>
     </div>
 
