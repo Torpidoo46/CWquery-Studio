@@ -8,60 +8,52 @@
 </head>
 <body>
   <div class="main-container">
-    <header class="header" role="banner">
-      <h1>CWquery Studio</h1>
-      <div class="guide-and-theme" role="region" aria-label="Command Guide and Theme Toggle">
-        <details class="command-guide">
-          <summary>Command Guide</summary>
-          <div class="guide-content">
-            <h4>fields</h4>
-            <p>Retrieve one or more log fields using functions and operations.</p>
-            <code>fields @log, @logStream, @message, @timestamp</code>
-
-            <h4>filter</h4>
-            <p>Retrieve log fields based on one or more conditions.</p>
-            <code>filter @message like /(?i)(Exception|error|fail|5dd)/</code>
-
-            <h4>stats</h4>
-            <p>Calculate aggregate statistics such as count(), avg(), etc.</p>
-            <code>stats count() by bin(5m)</code>
-          </div>
-        </details>
-
-        <div class="theme-toggle" role="region" aria-label="Toggle Dark Mode">
-          <label class="switch" for="themeSwitch">
-            <input type="checkbox" id="themeSwitch" aria-checked="false" role="switch" />
-            <span class="slider"></span>
-          </label>
-          <span>Dark Mode</span>
-        </div>
-      </div>
-    </header>
-
-    <main class="grid" role="main">
-      <section class="card controls-card" aria-labelledby="queryTemplateLabel">
-        <label id="queryTemplateLabel" for="queryDropdown">Select Query Template:</label>
-        <select id="queryDropdown" aria-describedby="queryTemplateDesc" aria-required="true">
-          <option value="" disabled selected>Select a template</option>
-          <!-- Templates populated dynamically -->
+    <div class="card-container">
+      <div class="QueryInputPanel card">
+        <h2>Select Query Template:</h2>
+        <label for="templateSelect" class="sr-only">Choose a query template to generate your query.</label>
+        <select id="templateSelect" aria-label="Query template dropdown">
+          <option value="">Select a template</option>
         </select>
-        <small id="queryTemplateDesc" class="sr-only">Choose a query template to generate your query.</small>
 
-        <label for="eventIds">Paste Event IDs (newline separated):</label>
-        <textarea id="eventIds" placeholder="Enter event IDs, one per line" rows="6" aria-required="true"></textarea>
+        <p>Paste Event IDs (newline separated):</p>
+        <textarea id="eventIds" rows="6" placeholder="Enter event IDs, one per line"></textarea>
 
-        <button id="generateQuery" type="button" aria-live="polite">Generate Query</button>
-      </section>
+        <button id="generateBtn">Generate Query</button>
+      </div> <!-- /.QueryInputPanel -->
 
-      <section class="card output-card" aria-labelledby="generatedQueryLabel">
-        <div class="output-header">
-          <h2 id="generatedQueryLabel">Generated Query</h2>
-          <button id="copyQuery" type="button" aria-label="Copy generated query to clipboard">📋 Copy Query</button>
-        </div>
-        <textarea id="outputQuery" readonly aria-live="polite" rows="12" spellcheck="false" aria-describedby="outputDesc"></textarea>
-        <small id="outputDesc" class="sr-only">This area displays the generated query based on your inputs.</small>
-      </section>
-    </main>
+    </div> <!-- /.card-container -->
+
+    <div class="GeneratedQueryPanel card">
+      <h2>Generated Query</h2>
+      <button id="copyBtn">📋 Copy Query</button>
+      <textarea id="generatedQuery" rows="10" readonly></textarea>
+      <p class="helper-text">This area displays the generated query based on your inputs.</p>
+    </div> <!-- /.GeneratedQueryPanel -->
+  </div> <!-- /.main-container -->
+
+  <div class="guide-and-theme" role="region" aria-label="Command Guide and Theme Toggle">
+    <details class="command-guide">
+      <summary>Command Guide</summary>
+      <div class="guide-content">
+        <h4>fields</h4>
+        <p>Retrieve one or more log fields using functions and operations.</p>
+        <code>fields @log, @logStream, @message, @timestamp</code>
+
+        <h4>filter</h4>
+        <p>Retrieve log fields based on one or more conditions.</p>
+        <code>filter @message like /(?i)(Exception|error|fail|5dd)/</code>
+
+        <h4>stats</h4>
+        <p>Calculate aggregate statistics on log data.</p>
+        <code>stats count(*) by bin(5m)</code>
+      </div>
+    </details>
+
+    <label class="dark-mode-toggle">
+      Dark Mode
+      <input type="checkbox" id="darkModeToggle" />
+    </label>
   </div>
 
   <script src="script.js"></script>
