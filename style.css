@@ -21,7 +21,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 40px 20px;
 }
 
 body.light {
@@ -32,6 +31,14 @@ body.dark {
   color: var(--text-dark);
 }
 
+.outer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 40px 20px;
+}
+
 .container {
   background: var(--background-light);
   color: var(--text-light);
@@ -39,7 +46,7 @@ body.dark {
   border-radius: 12px;
   border: 2px solid var(--primary-color);
   width: 100%;
-  max-width: 900px;
+  max-width: 960px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
