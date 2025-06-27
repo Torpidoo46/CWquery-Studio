@@ -1,90 +1,105 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #1e1e1e;
-  color: #fff;
-  padding: 20px;
-  transition: background 0.3s, color 0.3s;
-}
+// Query Templates
+const templates = {
+  "Status Code Query": `fields @logStream, @timestamp
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
+  as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
+     statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
+     upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
+     upstreamExpires, tbc, cdn
+| filter requestMethod == "GET"
+| parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//
+| filter
+  {EVENT_FILTER}
+| parse statusCode /(?<@status2xx>2..)/
+| parse statusCode /(?<@status3xx>3..)/
+| parse statusCode /(?<@status4xx>4..)/
+| parse statusCode /(?<@status5xx>5..)/
+| stats count(@status2xx), count(@status3xx), count(@status4xx), count(@status5xx) by bin(1m) as time
+| limit 10000`,
 
-body.light {
-  background: #f5f5f5;
-  color: #000;
-}
+  "Response Time Query": `fields @logStream, @timestamp
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
+  as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
+     statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
+     upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
+     upstreamExpires, tbc, cdn
+| filter requestMethod == "GET"
+| parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//
+| filter
+  {EVENT_FILTER}
+| field abs(upstreamTime)*1000 as ust
+| field abs(requestTime)*1000 as rst
+| filter rst >= 0
+| filter ust >= 0
+| stats
+    avg(ust), avg(rst),
+    pct(ust, 95), pct(rst, 95),
+    pct(ust, 99), pct(rst, 99),
+    max(ust), max(rst)
+  by bin(10s) as time
+| order by time
+| limit 10000`
+};
 
-.container {
-  max-width: 700px;
-  margin: auto;
-}
+// Command Guide
+const commandGuide = {
+  "fields": "Retrieve one or more log fields. You can also use functions and operations such as abs(a+b), sqrt(a/b), log(a)+log(b), strlen(trim()), datefloor(), isPresent(), and others in this command.",
+  "filter": "Retrieve log fields based on one or more conditions. You can use comparison operators such as =, !=, >, >=, <, <=, boolean operators such as and, or, and not, and regular expressions.",
+  "filterIndex": "Only supported in Standard log class. Limits the query to indexed data using a specified field.",
+  "stats": "Calculate aggregate statistics such as sum(), avg(), count(), min(), max(). Can be nested.",
+  "sort": "Sort log fields in ascending or descending order.",
+  "limit": "Limit number of log events returned by a query.",
+  "parse": "Extract ephemeral fields from log messages for further processing.",
+  "dedup": "Remove duplicate results based on provided fields.",
+  "pattern": "Identify and collapse log groups with similar structures. (Standard class only)",
+  "diff": "Compare pattern changes between two time ranges. (Standard class only)",
+  "unnest": "Flatten a list into multiple records (esp. from JSON)."
+};
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
+// Populate dropdowns
+window.onload = function () {
+  const templateSelect = document.getElementById("templateSelect");
+  Object.keys(templates).forEach(key => {
+    const option = document.createElement("option");
+    option.value = key;
+    option.textContent = key;
+    templateSelect.appendChild(option);
+  });
 
-select, input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: none;
-  box-sizing: border-box;
-}
+  const commandGuideSelect = document.getElementById("commandGuide");
+  Object.keys(commandGuide).forEach(key => {
+    const option = document.createElement("option");
+    option.value = commandGuide[key];
+    option.textContent = key;
+    commandGuideSelect.appendChild(option);
+  });
 
-button {
-  padding: 10px 20px;
-  background: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  document.getElementById("commandGuide").addEventListener("change", function () {
+    const desc = this.value;
+    document.getElementById("commandDescription").innerText = desc;
+  });
 
-pre {
-  background: #333;
-  padding: 15px;
-  border-radius: 5px;
-  white-space: pre-wrap;
-  overflow-x: auto;
-}
+  document.getElementById("darkModeToggle").addEventListener("change", function () {
+    document.body.classList.toggle("light");
+  });
+};
 
-body.light pre {
-  background: #e0e0e0;
-  color: #000;
-}
+// Generate query with event IDs
+function generateQuery() {
+  const selectedTemplate = document.getElementById("templateSelect").value;
+  const input = document.getElementById("eventInput").value.trim();
+  const outputBox = document.getElementById("outputQuery");
 
-/* Dark Mode Toggle Switch */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 25px;
-}
-.switch input { display: none; }
-.slider {
-  position: absolute;
-  top: 0; left: 0;
-  right: 0; bottom: 0;
-  background-color: #ccc;
-  border-radius: 25px;
-  transition: 0.4s;
-}
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 20px;
-  width: 20px;
-  left: 3px;
-  bottom: 2.5px;
-  background-color: white;
-  border-radius: 50%;
-  transition: 0.4s;
-}
-input:checked + .slider {
-  background-color: #4caf50;
-}
-input:checked + .slider:before {
-  transform: translateX(24px);
-}
+  if (!input) {
+    alert("Please enter one or more event IDs.");
+    return;
+  }
 
+  const ids = input.split(",").map(id => `eventId = "${id.trim()}"`);
+  const eventFilter = ids.join(" or ");
+
+  const rawTemplate = templates[selectedTemplate];
+  const finalQuery = rawTemplate.replace("{EVENT_FILTER}", eventFilter);
+
+  outputBox.innerText = finalQuery;
+}
