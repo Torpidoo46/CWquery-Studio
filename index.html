@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,34 +7,37 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="light">
-  <div class="container">
-    <div class="top-bar">
-      <h1>CloudWatch Query Generator</h1>
-      <label class="switch">
-        <input type="checkbox" id="themeToggle">
-        <span class="slider"></span>
-      </label>
+  <div class="outer">
+    <div class="container">
+      <div class="header">
+        <h1>CloudWatch Query Generator</h1>
+        <div class="toggles">
+          <label class="toggle">
+            🌙
+            <input type="checkbox" id="themeToggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <label for="queryDropdown">Select Query Template:</label>
+      <select id="queryDropdown">
+        <option>Status Code Query</option>
+        <option>Response Time Query</option>
+      </select>
+
+      <label for="eventIds">Paste Event IDs (one per line):</label>
+      <textarea id="eventIds" rows="8" placeholder="Paste event IDs here..."></textarea>
+
+      <button id="generateQuery">Generate Query</button>
+
+      <div class="output-header">
+        <h2>Generated Query</h2>
+        <button id="copyQuery" title="Copy Query">📋</button>
+      </div>
+      <textarea id="outputQuery" rows="20" readonly></textarea>
     </div>
-
-    <label for="queryDropdown">Select Query Template:</label>
-    <select id="queryDropdown">
-      <option>Status Code Query</option>
-      <option>Response Time Query</option>
-    </select>
-
-    <label for="eventIds">Paste Event IDs (newline separated):</label>
-    <textarea id="eventIds" rows="10" placeholder="Paste event IDs here"></textarea>
-
-    <button id="generateQuery">Generate Query</button>
-
-    <div class="output-header">
-      <h2>Generated Query</h2>
-      <button id="copyQueryBtn" title="Copy to Clipboard">📋 Copy</button>
-    </div>
-
-    <textarea id="outputQuery" rows="20" readonly></textarea>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
