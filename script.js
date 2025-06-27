@@ -84,7 +84,7 @@ window.onload = function () {
   });
 };
 
-// ✅ Corrected Query Generator
+// ✅ Query generator supporting comma + newline-separated input
 function generateQuery() {
   const selectedTemplate = document.getElementById("templateSelect").value;
   const input = document.getElementById("eventInput").value.trim();
@@ -95,12 +95,13 @@ function generateQuery() {
     return;
   }
 
-  const ids = input.split(",")
+  const ids = input
+    .split(/[\n,]+/)
     .map(id => id.trim())
     .filter(Boolean)
     .map(id => `eventId = "${id}"`);
 
-  const eventFilter = ids.join(" or\n  "); // formatted properly with newlines
+  const eventFilter = ids.join(" or\n  ");
 
   const rawTemplate = templates[selectedTemplate];
   const finalQuery = rawTemplate.replace("{EVENT_FILTER}", eventFilter);
