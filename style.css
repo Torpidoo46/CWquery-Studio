@@ -36,18 +36,11 @@ body.dark {
   box-sizing: border-box;
 }
 
-/* Header layout fixed */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 20px;
-}
-
-.header > div:first-child {
-  display: flex;
-  flex-direction: column;
   gap: 10px;
 }
 
@@ -74,8 +67,10 @@ body.dark {
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0; left: 0;
-  right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: #ccc;
   transition: 0.4s;
   border-radius: 34px;
@@ -101,7 +96,6 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Grid */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -109,18 +103,12 @@ input:checked + .slider:before {
   margin-top: 30px;
 }
 
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .card {
   background-color: var(--card-bg-light);
   border: 1px solid var(--primary-color);
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 body.dark .card {
@@ -134,7 +122,9 @@ label {
   margin-top: 12px;
 }
 
-select, textarea, button {
+select,
+textarea,
+button {
   width: 100%;
   padding: 10px;
   margin-top: 6px;
@@ -183,13 +173,12 @@ button:hover {
   font-size: 18px;
 }
 
-/* ──────────── Query Command Guide Dropdown ──────────── */
-
+/* ✅ Command Guide Dropdown (Overlay and Fixed Width) */
 .command-guide {
   position: relative;
   display: inline-block;
-  max-width: 300px;
   z-index: 99;
+  max-width: 100%;
   align-self: flex-start;
 }
 
@@ -203,6 +192,7 @@ button:hover {
   font-size: 16px;
   display: inline-block;
   list-style: none;
+  white-space: nowrap;
 }
 
 .command-guide[open] summary::after {
@@ -224,12 +214,21 @@ button:hover {
   background-color: #fff;
   padding: 15px;
   width: 320px;
+  max-width: 100vw;
   max-height: 400px;
   overflow-y: auto;
+  overflow-x: hidden;
   border: 1px solid var(--primary-color);
   border-radius: 0 0 10px 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 100;
+  box-sizing: border-box;
+}
+
+@media (max-width: 400px) {
+  .guide-content {
+    width: 90vw;
+  }
 }
 
 body.dark .guide-content {
@@ -240,6 +239,7 @@ body.dark .guide-content {
 .guide-content h4 {
   margin: 10px 0 4px;
   color: var(--primary-color);
+  word-break: break-word;
 }
 
 .guide-content code {
@@ -251,6 +251,7 @@ body.dark .guide-content {
   font-family: monospace;
   word-wrap: break-word;
   font-size: 13px;
+  overflow-wrap: break-word;
 }
 
 body.dark .guide-content code {
