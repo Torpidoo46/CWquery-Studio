@@ -33,25 +33,25 @@ document.getElementById("generateQuery").addEventListener("click", () => {
 
   if (selectedQuery === "Status Code Query") {
     suffix = `
-| parse statusCode /(?<@status2xx>2..)/ 
-| parse statusCode /(?<@status3xx>3..)/ 
-| parse statusCode /(?<@status4xx>4..)/ 
-| parse statusCode /(?<@status5xx>5..)/ 
-| stats count(@status2xx), count(@status3xx), count(@status4xx), count(@status5xx) by bin(1m) as time 
+| parse statusCode /(?<@status2xx>2..)/
+| parse statusCode /(?<@status3xx>3..)/
+| parse statusCode /(?<@status4xx>4..)/
+| parse statusCode /(?<@status5xx>5..)/
+| stats count(@status2xx), count(@status3xx), count(@status4xx), count(@status5xx) by bin(1m) as time
 | limit 10000`;
   } else if (selectedQuery === "Response Time Query") {
     suffix = `
-| field abs(upstreamTime)*1000 as ust 
-| field abs(requestTime)*1000 as rst 
-| filter rst >= 0 
-| filter ust >= 0 
-| stats 
-    avg(ust), avg(rst), 
-    pct(ust, 95), pct(rst, 95), 
-    pct(ust, 99), pct(rst, 99), 
-    max(ust), max(rst) 
-  by bin(10s) as time 
-| order by time 
+| field abs(upstreamTime)*1000 as ust
+| field abs(requestTime)*1000 as rst
+| filter rst >= 0
+| filter ust >= 0
+| stats
+    avg(ust), avg(rst),
+    pct(ust, 95), pct(rst, 95),
+    pct(ust, 99), pct(rst, 99),
+    max(ust), max(rst)
+  by bin(10s) as time
+| order by time
 | limit 10000`;
   }
 
@@ -59,17 +59,15 @@ document.getElementById("generateQuery").addEventListener("click", () => {
   document.getElementById("outputQuery").value = fullQuery;
 });
 
-document.getElementById("themeToggle").addEventListener("click", () => {
-  const body = document.body;
-  const isDark = body.classList.toggle("dark");
-  body.classList.toggle("light", !isDark);
-  document.getElementById("themeToggle").textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+// Theme toggle
+document.getElementById('themeToggle').addEventListener('change', (e) => {
+  document.body.classList.toggle('dark', e.target.checked);
 });
 
-document.getElementById("copyQuery").addEventListener("click", () => {
-  const queryText = document.getElementById("outputQuery");
-  queryText.select();
-  queryText.setSelectionRange(0, 99999);
-  navigator.clipboard.writeText(queryText.value);
-  alert("Query copied to clipboard!");
+// Copy query to clipboard
+document.getElementById("copyIcon").addEventListener("click", () => {
+  const queryText = document.getElementById("outputQuery").value;
+  navigator.clipboard.writeText(queryText).then(() => {
+    alert("Query copied to clipboard!");
+  });
 });
