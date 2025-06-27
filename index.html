@@ -23,17 +23,22 @@
       </label>
     </div>
   </header>
-      <label for="templateSelect">Select Query Template:</label>
+
+  <main class="grid-container">
+    <section class="card left">
+      <h2>📝 Query Builder</h2>
+
+      <label for="templateSelect">⬇️ Select Template:</label>
       <select id="templateSelect"></select>
 
-      <label for="eventInput">Event ID's:</label>
-      <textarea id="eventInput" placeholder="Enter one per line"></textarea>
+      <label for="eventInput">🆔 Event IDs:</label>
+      <textarea id="eventInput" placeholder="Enter one per line or comma-separated..."></textarea>
 
-      <button onclick="generateQuery()">Generate Query</button>
+      <button onclick="generateQuery()">🔘 Generate Query</button>
     </section>
 
     <section class="card right">
-      <h2>Generated Query</h2>
+      <h2>🧾 Generated Query</h2>
       <pre id="outputQuery"></pre>
       <button id="copyBtn">📋 Copy Query</button>
     </section>
