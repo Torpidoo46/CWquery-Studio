@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CWquery Studio</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=2" />
 </head>
 <body class="light">
   <div class="main-container">
@@ -14,9 +14,20 @@
         <details class="command-guide">
           <summary>Command Guide</summary>
           <div class="guide-content">
-            <!-- same guide content as before -->
+            <h4>fields</h4>
+            <p>Retrieve one or more log fields using functions and operations.</p>
+            <code>fields @log, @logStream, @message, @timestamp</code>
+
+            <h4>filter</h4>
+            <p>Retrieve log fields based on one or more conditions.</p>
+            <code>filter @message like /(?i)(Exception|error|fail|5dd)/</code>
+
+            <h4>stats</h4>
+            <p>Calculate aggregate statistics such as count(), avg(), etc.</p>
+            <code>stats count() by bin(5m)</code>
           </div>
         </details>
+
         <div class="theme-toggle">
           <label class="switch">
             <input type="checkbox" id="themeSwitch">
@@ -30,12 +41,11 @@
     <div class="grid">
       <div class="card">
         <label for="queryDropdown">Select Query Template:</label>
-        <select id="queryDropdown">
-          <option>Status Code Query</option>
-          <option>Response Time Query</option>
-        </select>
+        <select id="queryDropdown"></select>
+
         <label for="eventIds">Paste Event IDs (newline separated):</label>
         <textarea id="eventIds" placeholder="Enter event ID's..."></textarea>
+
         <button id="generateQuery">Generate Query</button>
       </div>
 
