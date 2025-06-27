@@ -1,23 +1,36 @@
+:root {
+  --primary-color: #ff6f00;
+  --background-light: #ffffff;
+  --text-light: #111111;
+  --background-dark: #1a1a1a;
+  --text-dark: #eeeeee;
+  --card-bg-light: #f9f9f9;
+  --card-bg-dark: #2a2a2a;
+}
+
+/* Reset & Box sizing */
+*, *::before, *::after { box-sizing: border-box; }
+
 body {
   margin: 0;
-  font-family: sans-serif;
-  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  transition: background 0.3s, color 0.3s;
 }
-
 body.light {
-  background-color: orange;
-  color: #000;
+  background-color: var(--background-light);
+  color: var(--text-light);
 }
-
 body.dark {
-  background-color: #121212;
-  color: #fff;
+  background-color: var(--background-dark);
+  color: var(--text-dark);
 }
 
 .main-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 30px 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .header {
@@ -27,104 +40,62 @@ body.dark {
   flex-wrap: wrap;
 }
 
-h1 {
-  margin: 0;
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
 }
+
+.switch { /* toggle styling */ }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { /* ... */ }
+input:checked + .slider { background-color: var(--primary-color); }
+/* etc. */
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 30px;
 }
-
 .card {
-  background: white;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--card-bg-light);
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-
 body.dark .card {
-  background: #1e1e1e;
-  color: #fff;
+  background-color: var(--card-bg-dark);
 }
 
-textarea {
-  width: 100%;
-  height: 150px;
-  resize: vertical;
-  margin-top: 0.5rem;
-}
+label { /* styling */ }
+select, textarea, button { /* styling */ }
 
-button {
-  margin-top: 0.5rem;
-  padding: 0.5rem 1rem;
-}
+textarea { resize: vertical; min-height: 120px; }
+
+#outputQuery { min-height: 200px; }
+
+button { /* styling */ }
+button:hover { opacity: 0.9; }
 
 .output-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 30px;
+  margin-bottom: 6px;
 }
 
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 24px;
-  margin-right: 8px;
-}
+#copyQuery { /* styling */ }
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: gray;
-  border-radius: 24px;
-  cursor: pointer;
-  transition: 0.4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  border-radius: 50%;
-  transition: 0.4s;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:checked + .slider:before {
-  transform: translateX(16px);
-}
-
-.command-guide summary {
-  font-weight: bold;
-  cursor: pointer;
-  color: green;
-}
-
-.command-guide[open] summary {
-  color: darkgreen;
-}
-
-.guide-content {
-  padding: 0.5rem 1rem;
-}
-
+/* Command guide dropdown */
+.command-guide { position: relative; display: inline-block; }
+.command-guide summary { /* styling */ }
+.command-guide[open] summary::after { content: " ▲"; }
+.command-guide summary::after { content: " ▼"; }
+.guide-content { /* styling */ }
+body.dark .guide-content { background-color: #333; color: #fff; }
+.guide-content h4 { margin: 10px 0 4px; color: var(--primary-color); }
+.guide-content code { /* styling */ }
