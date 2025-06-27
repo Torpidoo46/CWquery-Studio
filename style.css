@@ -167,4 +167,34 @@ button:hover {
   min-height: 200px; /* Adjust to your preference */
   resize: vertical;
 }
+/* Styling for Query Command Guide dropdown */
+.command-guide summary {
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 0;
+  font-weight: bold;
+}
 
+.command-list details {
+  margin: 5px 0;
+}
+
+.command-list p {
+  margin: 4px 0 6px;
+  font-size: 14px;
+}
+
+.command-list code {
+  display: block;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 6px 10px;
+  font-family: monospace;
+  border-radius: 4px;
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+body.dark .command-list code {
+  background: rgba(255, 255, 255, 0.1);
+}
