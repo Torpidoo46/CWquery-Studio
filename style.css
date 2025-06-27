@@ -232,4 +232,28 @@ button {
 button:hover, button:focus {
   background-color: var(--color-primary-hover);
   outline: none;
-  box-shadow: 0 4px 12px rgba(0, 90, 158,
+  box-shadow: 0 4px 12px rgba(0, 90, 158)
+
+/* === ADDED STYLES FOR SIDE-BY-SIDE CARDS AND ORANGE BG === */
+
+.card-container {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allows responsiveness */
+}
+
+.card {
+  background-color: var(--color-bg-light);
+  padding: 16px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 320px; /* Responsive minimum width */
+}
+
+/* Orange background only in light mode */
+html[data-theme='light'] body {
+  background-color: orange;
+}
+
