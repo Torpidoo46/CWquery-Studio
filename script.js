@@ -1,17 +1,17 @@
 const queries = {
   "Status Code Query": `
 fields @logStream, @timestamp
-| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"' 
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
   as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
      statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
      upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
      upstreamExpires, tbc, cdn
 | filter requestMethod == "GET"
 | parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//`,
-
+  
   "Response Time Query": `
 fields @logStream, @timestamp
-| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"' 
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
   as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
      statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
      upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
@@ -22,15 +22,15 @@ fields @logStream, @timestamp
 
 document.getElementById("generateQuery").addEventListener("click", () => {
   const selectedQuery = document.getElementById("queryDropdown").value;
-  const baseQuery = queries[selectedQuery] || "";
+  const baseQuery = queries[selectedQuery];
   const rawIds = document.getElementById("eventIds").value.trim();
-  const ids = rawIds.split(/\r?\n/).map(id => id.trim()).filter(Boolean);
+  const lines = rawIds.split(/\r?\n/).filter(id => id.trim());
 
-  const filterBlock = ids.length > 0
-    ? `| filter\n${ids.map(id => `  eventId = "${id}"`).join(" or\n")}`
-    : "";
+  const filters = lines.map(id => `  eventId = "${id}"`).join(" or\n");
+  const filterBlock = lines.length ? `| filter\n${filters}` : "";
 
   let suffix = "";
+
   if (selectedQuery === "Status Code Query") {
     suffix = `
 | parse statusCode /(?<@status2xx>2..)/
@@ -39,7 +39,7 @@ document.getElementById("generateQuery").addEventListener("click", () => {
 | parse statusCode /(?<@status5xx>5..)/
 | stats count(@status2xx), count(@status3xx), count(@status4xx), count(@status5xx) by bin(1m) as time
 | limit 10000`;
-  } else if (selectedQuery === "Response Time Query") {
+  } else {
     suffix = `
 | field abs(upstreamTime)*1000 as ust
 | field abs(requestTime)*1000 as rst
@@ -64,7 +64,7 @@ document.getElementById("themeToggle").addEventListener("change", (e) => {
   document.body.classList.toggle("light", !e.target.checked);
 });
 
-document.getElementById("copyQuery").addEventListener("click", () => {
+document.getElementById("copyQueryBtn").addEventListener("click", () => {
   const output = document.getElementById("outputQuery");
   output.select();
   document.execCommand("copy");
