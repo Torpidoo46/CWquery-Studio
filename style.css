@@ -1,12 +1,13 @@
 :root {
   --primary-color: #ff6f00;
-  --guide-color: #28a745; /* Green for Command Guide */
+  --secondary-color: #00c853; /* for green dropdown */
   --background-light: #ffffff;
   --text-light: #111111;
   --background-dark: #1a1a1a;
   --text-dark: #eeeeee;
   --card-bg-light: #f9f9f9;
   --card-bg-dark: #2a2a2a;
+  --outer-background: #ff6f00; /* orange for outside */
 }
 
 *, *::before, *::after {
@@ -16,24 +17,23 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
+  background-color: var(--outer-background); /* orange background */
   transition: background 0.3s, color 0.3s;
 }
 
 body.light {
-  background-color: var(--background-light);
   color: var(--text-light);
 }
 
 body.dark {
-  background-color: var(--background-dark);
   color: var(--text-dark);
+  background-color: var(--background-dark); /* dark override */
 }
 
 .main-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 30px 20px;
-  min-height: 100vh;
   box-sizing: border-box;
 }
 
@@ -139,12 +139,11 @@ textarea {
   resize: vertical;
   padding: 10px;
   font-size: 14px;
-  box-sizing: border-box;
 }
 
 #outputQuery {
   flex-grow: 1;
-  min-height: 250px;
+  min-height: 300px;
   margin-top: 12px;
   resize: vertical;
 }
@@ -167,8 +166,9 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 12px;
   width: 100%;
+  margin-top: 0;
 }
 
 #copyQuery {
@@ -192,7 +192,7 @@ button:hover {
   font-weight: bold;
   cursor: pointer;
   padding: 10px 16px;
-  background-color: var(--guide-color); /* Green */
+  background-color: var(--secondary-color); /* green */
   color: white;
   border-radius: 10px;
   list-style: none;
@@ -218,7 +218,7 @@ button:hover {
   overflow-y: auto;
   background-color: white;
   padding: 20px;
-  border: 1px solid var(--guide-color);
+  border: 1px solid var(--secondary-color);
   border-top: none;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -231,4 +231,21 @@ body.dark .guide-content {
 }
 
 .guide-content h4 {
-  margin: 1
+  margin: 10px 0 4px;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.guide-content code {
+  display: block;
+  background: #f3f3f3;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  font-family: monospace;
+  word-wrap: break-word;
+}
+
+body.dark .guide-content code {
+  background: #444;
+}
