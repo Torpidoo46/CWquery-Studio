@@ -198,3 +198,55 @@ button:hover {
 body.dark .command-list code {
   background: rgba(255, 255, 255, 0.1);
 }
+.command-guide {
+  margin-top: 10px;
+  font-size: 14px;
+  width: 100%;
+}
+.command-guide summary {
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.command-guide[open] summary {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.guide-content {
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid var(--primary-color);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+}
+
+body.dark .guide-content {
+  background-color: #333;
+  color: #fff;
+}
+
+.guide-content h4 {
+  margin: 10px 0 4px;
+  color: var(--primary-color);
+}
+
+.guide-content code {
+  display: block;
+  background: #f3f3f3;
+  padding: 6px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-family: monospace;
+  word-wrap: break-word;
+}
+
+body.dark .guide-content code {
+  background: #444;
+}
+
