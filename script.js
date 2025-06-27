@@ -43,20 +43,20 @@ const templates = {
 
 // Command Guide
 const commandGuide = {
-  "fields": "Retrieve one or more log fields. You can also use functions and operations such as abs(a+b), sqrt(a/b), log(a)+log(b), strlen(trim()), datefloor(), isPresent(), and others in this command.",
-  "filter": "Retrieve log fields based on one or more conditions. You can use comparison operators such as =, !=, >, >=, <, <=, boolean operators such as and, or, and not, and regular expressions.",
-  "filterIndex": "Only supported in Standard log class. Limits the query to indexed data using a specified field.",
-  "stats": "Calculate aggregate statistics such as sum(), avg(), count(), min(), max(). Can be nested.",
+  "fields": "Retrieve one or more log fields. Supports functions like abs(), sqrt(), etc.",
+  "filter": "Retrieve log fields based on conditions. Supports =, !=, >, regex, etc.",
+  "filterIndex": "Limit query to indexed data using the specified field.",
+  "stats": "Calculate stats: sum(), avg(), count(), etc. Can be nested.",
   "sort": "Sort log fields in ascending or descending order.",
-  "limit": "Limit number of log events returned by a query.",
-  "parse": "Extract ephemeral fields from log messages for further processing.",
+  "limit": "Limit the number of log events returned by a query.",
+  "parse": "Extract ephemeral fields from log messages.",
   "dedup": "Remove duplicate results based on provided fields.",
-  "pattern": "Identify and collapse log groups with similar structures. (Standard class only)",
-  "diff": "Compare pattern changes between two time ranges. (Standard class only)",
-  "unnest": "Flatten a list into multiple records (esp. from JSON)."
+  "pattern": "Identify repeating log patterns. (Standard class only)",
+  "diff": "Compare patterns across two time ranges. (Standard class only)",
+  "unnest": "Flatten a list into multiple records from a JSON message."
 };
 
-// Populate dropdowns
+// Populate dropdowns on load
 window.onload = function () {
   const templateSelect = document.getElementById("templateSelect");
   Object.keys(templates).forEach(key => {
@@ -66,17 +66,16 @@ window.onload = function () {
     templateSelect.appendChild(option);
   });
 
-  const commandGuideSelect = document.getElementById("commandGuide");
-  Object.keys(commandGuide).forEach(key => {
+  const guideSelect = document.getElementById("commandGuide");
+  Object.entries(commandGuide).forEach(([key, desc]) => {
     const option = document.createElement("option");
-    option.value = commandGuide[key];
+    option.value = desc;
     option.textContent = key;
-    commandGuideSelect.appendChild(option);
+    guideSelect.appendChild(option);
   });
 
-  document.getElementById("commandGuide").addEventListener("change", function () {
-    const desc = this.value;
-    document.getElementById("commandDescription").innerText = desc;
+  guideSelect.addEventListener("change", function () {
+    alert(this.value);
   });
 
   document.getElementById("darkModeToggle").addEventListener("change", function () {
@@ -84,7 +83,7 @@ window.onload = function () {
   });
 };
 
-// ✅ Query generator supporting comma + newline-separated input
+// Generate Query Logic
 function generateQuery() {
   const selectedTemplate = document.getElementById("templateSelect").value;
   const input = document.getElementById("eventInput").value.trim();
@@ -102,7 +101,6 @@ function generateQuery() {
     .map(id => `eventId = "${id}"`);
 
   const eventFilter = ids.join(" or\n  ");
-
   const rawTemplate = templates[selectedTemplate];
   const finalQuery = rawTemplate.replace("{EVENT_FILTER}", eventFilter);
 
