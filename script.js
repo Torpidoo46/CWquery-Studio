@@ -1,29 +1,27 @@
 let queries = [];
 
-fetch("templet.json?v=2") // Cache busting
+fetch("templet.json?v=2")
   .then((res) => res.json())
   .then((data) => {
     queries = data;
-
     const dropdown = document.getElementById("queryDropdown");
-    dropdown.innerHTML = ""; // Clear existing options
-
+    dropdown.innerHTML = "";
     queries.forEach((item, index) => {
       const option = document.createElement("option");
       option.textContent = item.name;
-      option.value = index; // use index for reference
+      option.value = index;
       dropdown.appendChild(option);
     });
   });
 
 document.getElementById("generateQuery").addEventListener("click", () => {
-  const selectedIndex = parseInt(document.getElementById("queryDropdown").value, 10);
+  const selectedIndex = document.getElementById("queryDropdown").value;
   const template = queries[selectedIndex];
   if (!template) return;
 
   const rawIds = document.getElementById("eventIds").value.trim();
-  const lines = rawIds.split(/\r?\n/).filter(id => id.trim().length > 0);
-  const eventFilters = lines.map(id => `  eventId = "${id.trim()}"`).join(" or\n");
+  const lines = rawIds.split(/\r?\n/).filter((id) => id.trim().length > 0);
+  const eventFilters = lines.map((id) => `  eventId = "${id.trim()}"`).join(" or\n");
   const filterBlock = lines.length > 0 ? `| filter\n${eventFilters}` : "";
 
   const fullQuery = template.query.replace("{{eventIds}}", filterBlock);
@@ -40,4 +38,3 @@ document.getElementById("copyQuery").addEventListener("click", () => {
   output.select();
   document.execCommand("copy");
 });
-
