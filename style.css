@@ -134,6 +134,11 @@ textarea {
   min-height: 120px;
 }
 
+#outputQuery {
+  min-height: 200px;
+  resize: vertical;
+}
+
 button {
   background-color: var(--primary-color);
   color: white;
@@ -153,7 +158,6 @@ button:hover {
   align-items: center;
   margin-top: 30px;
   margin-bottom: 6px;
-  box-sizing: border-box;
   width: 100%;
 }
 
@@ -163,46 +167,16 @@ button:hover {
   border-radius: 4px;
   font-size: 18px;
 }
-#outputQuery {
-  min-height: 200px; /* Adjust to your preference */
-  resize: vertical;
-}
-/* Styling for Query Command Guide dropdown */
-.command-guide summary {
-  cursor: pointer;
-  font-size: 16px;
-  padding: 10px 0;
-  font-weight: bold;
-}
 
-.command-list details {
-  margin: 5px 0;
-}
-
-.command-list p {
-  margin: 4px 0 6px;
-  font-size: 14px;
-}
-
-.command-list code {
-  display: block;
-  background: rgba(0, 0, 0, 0.05);
-  padding: 6px 10px;
-  font-family: monospace;
-  border-radius: 4px;
-  font-size: 13px;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-body.dark .command-list code {
-  background: rgba(255, 255, 255, 0.1);
-}
+/* 🔽 Query Command Guide (Dropdown Overlay Style) */
 .command-guide {
-  margin-top: 10px;
-  font-size: 14px;
+  position: relative;
+  display: inline-block;
   width: 100%;
+  max-width: 300px;
+  z-index: 99;
 }
+
 .command-guide summary {
   font-weight: bold;
   cursor: pointer;
@@ -211,19 +185,32 @@ body.dark .command-list code {
   color: white;
   border-radius: 6px;
   margin-bottom: 10px;
+  list-style: none;
 }
 
-.command-guide[open] summary {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+.command-guide[open] summary::after {
+  content: "▲";
+  float: right;
+}
+
+.command-guide summary::after {
+  content: "▼";
+  float: right;
 }
 
 .guide-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
   background-color: #fff;
   padding: 15px;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
   border: 1px solid var(--primary-color);
-  border-top: none;
   border-radius: 0 0 6px 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
 }
 
 body.dark .guide-content {
@@ -249,4 +236,3 @@ body.dark .guide-content {
 body.dark .guide-content code {
   background: #444;
 }
-
