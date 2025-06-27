@@ -8,7 +8,7 @@ fields @logStream, @timestamp
      upstreamExpires, tbc, cdn
 | filter requestMethod == "GET"
 | parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//`,
-  
+
   "Response Time Query": `
 fields @logStream, @timestamp
 | parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"' 
@@ -25,31 +25,33 @@ document.getElementById("generateQuery").addEventListener("click", () => {
   const baseQuery = queries[selectedQuery] || "";
   const rawIds = document.getElementById("eventIds").value.trim();
   const lines = rawIds.split(/\r?\n/).filter(id => id.trim().length > 0);
+
   const eventFilters = lines.map(id => `  eventId = "${id.trim()}"`).join(" or\n");
   const finalFilter = lines.length > 0 ? `| filter\n${eventFilters}` : "";
 
   let suffix = "";
+
   if (selectedQuery === "Status Code Query") {
     suffix = `
-| parse statusCode /(?<@status2xx>2..)/
-| parse statusCode /(?<@status3xx>3..)/
-| parse statusCode /(?<@status4xx>4..)/
-| parse statusCode /(?<@status5xx>5..)/
-| stats count(@status2xx), count(@status3xx), count(@status4xx), count(@status5xx) by bin(1m) as time
+| parse statusCode /(?<@status2xx>2..)/ 
+| parse statusCode /(?<@status3xx>3..)/ 
+| parse statusCode /(?<@status4xx>4..)/ 
+| parse statusCode /(?<@status5xx>5..)/ 
+| stats count(@status2xx), count(@status3xx), count(@status4xx), count(@status5xx) by bin(1m) as time 
 | limit 10000`;
   } else if (selectedQuery === "Response Time Query") {
     suffix = `
-| field abs(upstreamTime)*1000 as ust
-| field abs(requestTime)*1000 as rst
-| filter rst >= 0
-| filter ust >= 0
-| stats
-    avg(ust), avg(rst),
-    pct(ust, 95), pct(rst, 95),
-    pct(ust, 99), pct(rst, 99),
-    max(ust), max(rst)
-  by bin(10s) as time
-| order by time
+| field abs(upstreamTime)*1000 as ust 
+| field abs(requestTime)*1000 as rst 
+| filter rst >= 0 
+| filter ust >= 0 
+| stats 
+    avg(ust), avg(rst), 
+    pct(ust, 95), pct(rst, 95), 
+    pct(ust, 99), pct(rst, 99), 
+    max(ust), max(rst) 
+  by bin(10s) as time 
+| order by time 
 | limit 10000`;
   }
 
@@ -57,14 +59,17 @@ document.getElementById("generateQuery").addEventListener("click", () => {
   document.getElementById("outputQuery").value = fullQuery;
 });
 
-document.getElementById("toggleTheme").addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  document.body.classList.toggle("light");
+document.getElementById("themeToggle").addEventListener("click", () => {
+  const body = document.body;
+  const isDark = body.classList.toggle("dark");
+  body.classList.toggle("light", !isDark);
+  document.getElementById("themeToggle").textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
 });
 
 document.getElementById("copyQuery").addEventListener("click", () => {
-  const query = document.getElementById("outputQuery").value;
-  navigator.clipboard.writeText(query).then(() => {
-    alert("Query copied to clipboard!");
-  });
+  const queryText = document.getElementById("outputQuery");
+  queryText.select();
+  queryText.setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(queryText.value);
+  alert("Query copied to clipboard!");
 });
