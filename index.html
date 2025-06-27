@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CloudWatch Query Builder</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="light">
-  <div class="wrapper">
+  <div class="outer">
     <div class="container">
-      <h1>CloudWatch Query Generator</h1>
+      <div class="header">
+        <h1>CloudWatch Query Generator</h1>
+        <div class="toggles">
+          <button id="themeToggle">🌙 Theme</button>
+          <button id="copyQuery">📋 Copy Query</button>
+        </div>
+      </div>
 
       <label for="queryDropdown">Select Query Template:</label>
       <select id="queryDropdown">
@@ -26,6 +32,7 @@
       <textarea id="outputQuery" rows="20" readonly></textarea>
     </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
