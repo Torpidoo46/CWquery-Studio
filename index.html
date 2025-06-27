@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CloudWatch Query Builder</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -11,8 +11,8 @@
     <header>
       <h1>CloudWatch Query Generator</h1>
       <div class="toggles">
-        <button id="toggleTheme">🌓 Toggle Theme</button>
-        <button id="toggleSound">🔊 Sound On</button>
+        <button id="toggleTheme">🌓 Theme</button>
+        <button id="copyQuery">📋 Copy Query</button>
       </div>
     </header>
 
@@ -26,16 +26,12 @@
       <label for="eventIds">Paste Event IDs (newline separated):</label>
       <textarea id="eventIds" rows="10" placeholder="Paste event IDs here"></textarea>
 
-      <button id="generateQuery">⚙️ Generate Query</button>
+      <button id="generateQuery">Generate Query</button>
 
       <h2>Generated Query</h2>
       <textarea id="outputQuery" rows="20" readonly></textarea>
-
-      <button id="copyQuery">📋 Copy Query</button>
     </main>
   </div>
-
-  <!-- click.mp3 must be in same directory or adjust path in script.js -->
   <script src="script.js"></script>
 </body>
 </html>
