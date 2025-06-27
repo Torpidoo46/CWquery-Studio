@@ -39,7 +39,7 @@ body.dark {
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
 }
 
@@ -168,7 +168,7 @@ button:hover {
   font-size: 18px;
 }
 
-/* 🔽 Query Command Guide (Dropdown Overlay Style) */
+/* 🔶 Query Command Guide (Styled Dropdown Overlay) */
 .command-guide {
   position: relative;
   display: inline-block;
@@ -180,22 +180,27 @@ button:hover {
 .command-guide summary {
   font-weight: bold;
   cursor: pointer;
-  padding: 10px;
-  background-color: #e6ffe6; /* light green background */
-  color: green; /* green icon and text */
-  border-radius: 6px;
+  padding: 10px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 8px;
   margin-bottom: 10px;
   list-style: none;
-}
-
-.command-guide[open] summary::after {
-  content: "▲";
-  float: right;
+  display: inline-block;
+  font-size: 16px;
+  border: none;
+  transition: background 0.3s ease;
 }
 
 .command-guide summary::after {
   content: "▼";
   float: right;
+  margin-left: 8px;
+  font-size: 12px;
+}
+
+.command-guide[open] summary::after {
+  content: "▲";
 }
 
 .guide-content {
@@ -236,3 +241,4 @@ body.dark .guide-content {
 body.dark .guide-content code {
   background: #444;
 }
+
