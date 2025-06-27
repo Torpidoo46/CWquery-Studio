@@ -1,63 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CWquery Studio</title>
   <link rel="stylesheet" href="style.css?v=2" />
 </head>
-<body class="light">
+<body>
   <div class="main-container">
-    <div class="header">
+    <header class="header" role="banner">
       <h1>CWquery Studio</h1>
-      <div class="guide-and-theme">
-        <details class="command-guide">
+      <div class="guide-and-theme" role="region" aria-label="Command Guide and Theme Toggle">
+        <details class="command-guide" aria-details="commandGuideContent">
           <summary>Command Guide</summary>
-          <div class="guide-content">
-            <h4>fields</h4>
-            <p>Retrieve one or more log fields using functions and operations.</p>
-            <code>fields @log, @logStream, @message, @timestamp</code>
-
-            <h4>filter</h4>
-            <p>Retrieve log fields based on one or more conditions.</p>
-            <code>filter @message like /(?i)(Exception|error|fail|5dd)/</code>
-
-            <h4>stats</h4>
-            <p>Calculate aggregate statistics such as count(), avg(), etc.</p>
-            <code>stats count() by bin(5m)</code>
+          <div class="guide-content" id="commandGuideContent">
+            <section>
+              <h4>fields</h4>
+              <p>Retrieve one or more log fields using functions and operations.</p>
+              <pre><code>fields @log, @logStream, @message, @timestamp</code></pre>
+            </section>
+            <section>
+              <h4>filter</h4>
+              <p>Retrieve log fields based on one or more conditions.</p>
+              <pre><code>filter @message like /(?i)(Exception|error|fail|5dd)/</code></pre>
+            </section>
+            <section>
+              <h4>stats</h4>
+              <p>Calculate aggregate statistics such as count(), avg(), etc.</p>
+              <pre><code>stats count() by bin(5m)</code></pre>
+            </section>
           </div>
         </details>
 
-        <div class="theme-toggle">
-          <label class="switch">
-            <input type="checkbox" id="themeSwitch">
+        <div class="theme-toggle" role="region" aria-label="Toggle Dark Mode">
+          <label class="switch" for="themeSwitch">
+            <input type="checkbox" id="themeSwitch" aria-checked="false" role="switch" />
             <span class="slider"></span>
           </label>
           <span>Dark Mode</span>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="grid">
-      <div class="card">
-        <label for="queryDropdown">Select Query Template:</label>
-        <select id="queryDropdown"></select>
+    <main class="grid" role="main">
+      <section class="card" aria-labelledby="queryTemplateLabel">
+        <label id="queryTemplateLabel" for="queryDropdown">Select Query Template:</label>
+        <select id="queryDropdown" aria-describedby="queryTemplateDesc" aria-required="true">
+          <option value="" disabled selected>Select a template</option>
+          <!-- Templates will be populated dynamically -->
+        </select>
+        <small id="queryTemplateDesc" class="sr-only">Choose a query template to generate your query.</small>
 
         <label for="eventIds">Paste Event IDs (newline separated):</label>
-        <textarea id="eventIds" placeholder="Enter event ID's..."></textarea>
+        <textarea id="eventIds" placeholder="Enter event IDs, one per line" rows="6" aria-required="true"></textarea>
 
-        <button id="generateQuery">Generate Query</button>
-      </div>
+        <button id="generateQuery" type="button" aria-live="polite">Generate Query</button>
+      </section>
 
-      <div class="card output-card">
+      <section class="card output-card" aria-labelledby="generatedQueryLabel">
         <div class="output-header">
-          <h2>Generated Query</h2>
-          <button id="copyQuery">📋 Copy Query</button>
+          <h2 id="generatedQueryLabel">Generated Query</h2>
+          <button id="copyQuery" type="button" aria-label="Copy generated query to clipboard">📋 Copy Query</button>
         </div>
-        <textarea id="outputQuery"></textarea>
-      </div>
-    </div>
+        <textarea id="outputQuery" readonly aria-live="polite" rows="12" spellcheck="false" aria-describedby="outputDesc"></textarea>
+        <small id="outputDesc" class="sr-only">This area displays the generated query based on your inputs.</small>
+      </section>
+    </main>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
