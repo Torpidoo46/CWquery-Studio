@@ -41,6 +41,7 @@ body.dark {
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 .theme-toggle {
@@ -98,6 +99,7 @@ input:checked + .slider:before {
   grid-template-columns: 1fr 1fr;
   gap: 30px;
   margin-top: 30px;
+  align-items: stretch;
 }
 
 .card {
@@ -106,6 +108,8 @@ input:checked + .slider:before {
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
 }
 
 body.dark .card {
@@ -130,16 +134,17 @@ select, textarea, button {
 }
 
 textarea {
+  min-height: 250px;
   resize: vertical;
-  min-height: 180px;
-}
-
-#eventIds {
-  min-height: 180px;
+  padding: 10px;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 
 #outputQuery {
-  min-height: 300px;
+  flex-grow: 1;
+  min-height: 250px;
+  margin-top: 12px;
   resize: vertical;
 }
 
@@ -149,7 +154,8 @@ button {
   border: none;
   cursor: pointer;
   font-weight: bold;
-  margin-top: 12px;
+  margin-top: 16px;
+  padding: 12px 16px;
 }
 
 button:hover {
@@ -160,73 +166,63 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0px;
+  margin-top: 30px;
   margin-bottom: 6px;
   width: 100%;
 }
 
 #copyQuery {
   width: auto;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  cursor: pointer;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 18px;
 }
 
-#copyQuery:hover {
-  opacity: 0.9;
-}
+/* ───────────── Command Guide Styles ───────────── */
 
-/* 🔽 Query Command Guide Dropdown */
 .command-guide {
   position: relative;
   display: inline-block;
-  max-width: 100%;
+  width: 100%;
+  max-width: 300px;
   z-index: 99;
-  margin-bottom: 10px;
 }
 
 .command-guide summary {
   font-weight: bold;
   cursor: pointer;
-  padding: 10px;
+  padding: 10px 16px;
   background-color: var(--primary-color);
   color: white;
-  border-radius: 8px;
-  margin-bottom: 8px;
+  border-radius: 10px;
   list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-size: 16px;
 }
 
 .command-guide[open] summary::after {
-  content: "▲";
-  margin-left: 8px;
+  content: " ▲";
+  float: right;
 }
 
 .command-guide summary::after {
-  content: "▼";
-  margin-left: 8px;
+  content: " ▼";
+  float: right;
 }
 
 .guide-content {
   position: absolute;
   top: 100%;
-  left: 0;
-  background-color: #fff;
-  padding: 15px;
-  width: 380px;
-  max-height: 420px;
+  right: 0;
+  width: 360px;
+  max-height: 500px;
   overflow-y: auto;
+  background-color: white;
+  padding: 20px;
   border: 1px solid var(--primary-color);
-  border-radius: 0 0 6px 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 100;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
 }
 
 body.dark .guide-content {
@@ -237,14 +233,15 @@ body.dark .guide-content {
 .guide-content h4 {
   margin: 10px 0 4px;
   color: var(--primary-color);
+  font-weight: bold;
 }
 
 .guide-content code {
   display: block;
   background: #f3f3f3;
-  padding: 6px;
-  border-radius: 4px;
-  margin-bottom: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 14px;
   font-family: monospace;
   word-wrap: break-word;
 }
