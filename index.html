@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Query Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="header">
+      <h1>Query Generator</h1>
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle" checked />
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <label for="templateSelect">Choose a Query Template:</label>
+    <select id="templateSelect"></select>
+
+    <label for="eventInput">Enter Event ID(s) (comma-separated):</label>
+    <input type="text" id="eventInput" placeholder="e.g., 123,456" />
+
+    <label for="commandGuide">Command Guide:</label>
+    <select id="commandGuide">
+      <option value="">-- Select a command --</option>
+    </select>
+    <p id="commandDescription"></p>
+
+    <button onclick="generateQuery()">Generate Query</button>
+
+    <h3>Generated Query:</h3>
+    <pre id="outputQuery"></pre>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
 
