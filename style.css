@@ -1,83 +1,66 @@
 :root {
-  --primary-color: #ff6f00;
-  --bg-light: #ffffff;
-  --bg-dark: #1e1e1e;
-  --text-light: #000000;
-  --text-dark: #ffffff;
+  --primary: #ff6f00;
+  --bg-light: #f9f9f9;
+  --bg-dark: #1a1a1a;
+  --text-light: #111;
+  --text-dark: #eee;
+  --accent-light: #fff8f0;
+  --accent-dark: #333;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  padding: 20px;
+  padding: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: var(--bg-light);
+  transition: background 0.3s, color 0.3s;
+}
+
+body.light {
+  background: var(--bg-light);
   color: var(--text-light);
-  transition: background 0.4s, color 0.4s;
 }
 
 body.dark {
-  background-color: var(--bg-dark);
+  background: var(--bg-dark);
   color: var(--text-dark);
 }
 
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
+.main-container {
+  max-width: 900px;
+  margin: 40px auto;
   padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: background 0.3s;
+}
+
+body.dark .main-container {
+  background: #2a2a2a;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.toggle {
-  position: relative;
-  display: inline-block;
-  width: 52px;
-  height: 28px;
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
 }
 
-.toggle input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 3px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  border-radius: 34px;
-  transition: 0.4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 22px;
-  width: 22px;
-  left: 4px;
-  bottom: 3px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-}
-
-.toggle input:checked + .slider {
-  background-color: var(--primary-color);
-}
-
-.toggle input:checked + .slider:before {
-  transform: translateX(24px);
-}
-
-label, select, textarea, button {
+label,
+select,
+textarea,
+button {
   display: block;
   width: 100%;
   margin-top: 15px;
@@ -86,18 +69,25 @@ label, select, textarea, button {
 
 textarea {
   padding: 12px;
-  border-radius: 6px;
-  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  border: 1px solid var(--primary);
   resize: vertical;
+  min-height: 100px;
+  background: var(--accent-light);
+  color: inherit;
+}
+
+body.dark textarea {
+  background: var(--accent-dark);
 }
 
 button {
-  padding: 12px;
-  background-color: var(--primary-color);
+  background-color: var(--primary);
   color: white;
-  font-weight: bold;
   border: none;
   border-radius: 6px;
+  padding: 12px;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -109,19 +99,65 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 25px;
 }
 
 #outputQuery {
-  background-color: #fff8f0;
-  color: #000;
-  border: 1px solid var(--primary-color);
-  padding: 12px;
-  border-radius: 6px;
+  background: var(--accent-light);
+  color: inherit;
   font-family: monospace;
+  margin-top: 10px;
+  height: 250px;
+  resize: vertical;
+  padding: 15px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid var(--primary);
 }
 
 body.dark #outputQuery {
-  background-color: #333;
-  color: #fff;
+  background: var(--accent-dark);
+}
+
+/* Toggle switch styles */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: #ccc;
+  border-radius: 24px;
+  transition: 0.4s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: var(--primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
 }
