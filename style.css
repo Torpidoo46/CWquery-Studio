@@ -41,7 +41,7 @@ body.dark {
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 20px;
 }
 
 .theme-toggle {
@@ -51,6 +51,7 @@ body.dark {
   font-weight: bold;
 }
 
+/* Toggle Switch */
 .switch {
   position: relative;
   display: inline-block;
@@ -67,10 +68,8 @@ body.dark {
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
   background-color: #ccc;
   transition: 0.4s;
   border-radius: 34px;
@@ -96,6 +95,7 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+/* Layout Grid */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -108,13 +108,14 @@ input:checked + .slider:before {
   border: 1px solid var(--primary-color);
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 body.dark .card {
   background-color: var(--card-bg-dark);
 }
 
+/* Form Elements */
 label {
   font-weight: bold;
   display: block;
@@ -122,9 +123,7 @@ label {
   margin-top: 12px;
 }
 
-select,
-textarea,
-button {
+select, textarea, button {
   width: 100%;
   padding: 10px;
   margin-top: 6px;
@@ -157,6 +156,7 @@ button:hover {
   opacity: 0.9;
 }
 
+/* Output Header */
 .output-header {
   display: flex;
   justify-content: space-between;
@@ -173,13 +173,13 @@ button:hover {
   font-size: 18px;
 }
 
-/* ✅ Command Guide Dropdown (Overlay and Fixed Width) */
+/* Query Command Guide Styles */
 .command-guide {
   position: relative;
   display: inline-block;
+  width: 100%;
+  max-width: 320px;
   z-index: 99;
-  max-width: 100%;
-  align-self: flex-start;
 }
 
 .command-guide summary {
@@ -189,32 +189,30 @@ button:hover {
   background-color: var(--primary-color);
   color: white;
   border-radius: 10px;
-  font-size: 16px;
-  display: inline-block;
+  margin-bottom: 10px;
   list-style: none;
-  white-space: nowrap;
+  font-size: 16px;
 }
 
 .command-guide[open] summary::after {
-  content: "▲";
+  content: " ▲";
   float: right;
-  margin-left: 10px;
 }
 
 .command-guide summary::after {
-  content: "▼";
+  content: " ▼";
   float: right;
-  margin-left: 10px;
 }
 
+/* Dropdown Content Styling */
 .guide-content {
   position: absolute;
   top: 100%;
-  left: 0;
+  right: 0;
   background-color: #fff;
   padding: 15px;
   width: 320px;
-  max-width: 100vw;
+  max-width: calc(100vw - 40px);
   max-height: 400px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -225,35 +223,28 @@ button:hover {
   box-sizing: border-box;
 }
 
-@media (max-width: 400px) {
-  .guide-content {
-    width: 90vw;
-  }
-}
-
 body.dark .guide-content {
   background-color: #333;
   color: #fff;
 }
 
+body.dark .guide-content code {
+  background: #444;
+}
+
+/* Inner text styles */
 .guide-content h4 {
   margin: 10px 0 4px;
   color: var(--primary-color);
-  word-break: break-word;
 }
 
 .guide-content code {
   display: block;
   background: #f3f3f3;
-  padding: 6px;
-  border-radius: 4px;
+  padding: 6px 10px;
+  border-radius: 6px;
   margin-bottom: 12px;
   font-family: monospace;
-  word-wrap: break-word;
   font-size: 13px;
-  overflow-wrap: break-word;
-}
-
-body.dark .guide-content code {
-  background: #444;
+  word-wrap: break-word;
 }
