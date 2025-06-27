@@ -6,6 +6,21 @@
   {
     "name": "Response Time Query",
     "query": "fields @logStream, @timestamp\n| parse @message '* - [*] * \"* * *\" * * \"*\" \"*\" * * \"*\" \"*\" \"*\" \"*\" \"*\" \"*\" \"*\"'\n  as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,\n     statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,\n     upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,\n     upstreamExpires, tbc, cdn\n| filter requestMethod == \"GET\"\n| parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//\n| filter {{eventIds}}\n| field abs(upstreamTime)*1000 as ust\n| field abs(requestTime)*1000 as rst\n| filter rst >= 0\n| filter ust >= 0\n| stats\n    avg(ust), avg(rst),\n    pct(ust, 95), pct(rst, 95),\n    pct(ust, 99), pct(rst, 99),\n    max(ust), max(rst)\n  by bin(10s) as time\n| order by time\n| limit 10000"
+  },
+  {
+    "name": "2XX Response Codes",
+    "query": "fields @logStream, @timestamp\n| parse @message '* - [*] * \"* * *\" * * \"*\" \"*\" * * \"*\" \"*\" \"*\" \"*\" \"*\" \"*\" \"*\"'\n  as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,\n     statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,\n     upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,\n     upstreamExpires, tbc, cdn\n| filter requestMethod == \"GET\"\n| parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//\n| filter {{eventIds}}\n| parse statusCode /(?<@status2xx>2..)/\n| stats count(@status2xx) by bin(1m) as time\n| limit 10000"
+  },
+  {
+    "name": "3XX Response Codes",
+    "query": "fields @logStream, @timestamp\n| parse @message '* - [*] * \"* * *\" * * \"*\" \"*\" * * \"*\" \"*\" \"*\" \"*\" \"*\" \"*\" \"*\"'\n  as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,\n     statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,\n     upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,\n     upstreamExpires, tbc, cdn\n| filter requestMethod == \"GET\"\n| parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//\n| filter {{eventIds}}\n| parse statusCode /(?<@status3xx>3..)/\n| stats count(@status3xx) by bin(1m) as time\n| limit 10000"
+  },
+  {
+    "name": "4XX Response Codes",
+    "query": "fields @logStream, @timestamp\n| parse @message '* - [*] * \"* * *\" * * \"*\" \"*\" * * \"*\" \"*\" \"*\" \"*\" \"*\" \"*\" \"*\"'\n  as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,\n     statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,\n     upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,\n     upstreamExpires, tbc, cdn\n| filter requestMethod == \"GET\"\n| parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//\n| filter {{eventIds}}\n| parse statusCode /(?<@status4xx>4..)/\n| stats count(@status4xx) by bin(1m) as time\n| limit 10000"
+  },
+  {
+    "name": "5XX Response Codes",
+    "query": "fields @logStream, @timestamp\n| parse @message '* - [*] * \"* * *\" * * \"*\" \"*\" * * \"*\" \"*\" \"*\" \"*\" \"*\" \"*\" \"*\"'\n  as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,\n     statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,\n     upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,\n     upstreamExpires, tbc, cdn\n| filter requestMethod == \"GET\"\n| parse url /\\/(?<eventId>[a-zA-Z0-9_]+)\\/(?<profile>.*)\\//\n| filter {{eventIds}}\n| parse statusCode /(?<@status5xx>5..)/\n| stats count(@status5xx) by bin(1m) as time\n| limit 10000"
   }
 ]
-
