@@ -36,11 +36,19 @@ body.dark {
   box-sizing: border-box;
 }
 
+/* Header layout fixed */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
+  gap: 20px;
+}
+
+.header > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .theme-toggle {
@@ -50,7 +58,6 @@ body.dark {
   font-weight: bold;
 }
 
-/* Toggle switch */
 .switch {
   position: relative;
   display: inline-block;
@@ -94,7 +101,158 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+/* Grid */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3
+  gap: 30px;
+  margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background-color: var(--card-bg-light);
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+body.dark .card {
+  background-color: var(--card-bg-dark);
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+  margin-top: 12px;
+}
+
+select, textarea, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: 1px solid var(--primary-color);
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+#outputQuery {
+  min-height: 200px;
+  resize: vertical;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 6px;
+  width: 100%;
+}
+
+#copyQuery {
+  width: auto;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 18px;
+}
+
+/* ──────────── Query Command Guide Dropdown ──────────── */
+
+.command-guide {
+  position: relative;
+  display: inline-block;
+  max-width: 300px;
+  z-index: 99;
+  align-self: flex-start;
+}
+
+.command-guide summary {
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  display: inline-block;
+  list-style: none;
+}
+
+.command-guide[open] summary::after {
+  content: "▲";
+  float: right;
+  margin-left: 10px;
+}
+
+.command-guide summary::after {
+  content: "▼";
+  float: right;
+  margin-left: 10px;
+}
+
+.guide-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  padding: 15px;
+  width: 320px;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--primary-color);
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+body.dark .guide-content {
+  background-color: #333;
+  color: #fff;
+}
+
+.guide-content h4 {
+  margin: 10px 0 4px;
+  color: var(--primary-color);
+}
+
+.guide-content code {
+  display: block;
+  background: #f3f3f3;
+  padding: 6px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-family: monospace;
+  word-wrap: break-word;
+  font-size: 13px;
+}
+
+body.dark .guide-content code {
+  background: #444;
+}
