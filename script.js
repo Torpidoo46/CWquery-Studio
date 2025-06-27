@@ -84,7 +84,7 @@ window.onload = function () {
   });
 };
 
-// Generate query with event IDs
+// ✅ Corrected Query Generator
 function generateQuery() {
   const selectedTemplate = document.getElementById("templateSelect").value;
   const input = document.getElementById("eventInput").value.trim();
@@ -95,8 +95,12 @@ function generateQuery() {
     return;
   }
 
-  const ids = input.split(",").map(id => `eventId = "${id.trim()}"`);
-  const eventFilter = ids.join(" or ");
+  const ids = input.split(",")
+    .map(id => id.trim())
+    .filter(Boolean)
+    .map(id => `eventId = "${id}"`);
+
+  const eventFilter = ids.join(" or\n  "); // formatted properly with newlines
 
   const rawTemplate = templates[selectedTemplate];
   const finalQuery = rawTemplate.replace("{EVENT_FILTER}", eventFilter);
