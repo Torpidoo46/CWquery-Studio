@@ -24,4 +24,25 @@
       <div class="card">
         <label for="queryDropdown">Select Query Template:</label>
         <select id="queryDropdown">
-          <option>Status Co
+          <option>Status Code Query</option>
+          <option>Response Time Query</option>
+        </select>
+
+        <label for="eventIds">Paste Event IDs (newline separated):</label>
+        <textarea id="eventIds" placeholder="Enter event IDs..."></textarea>
+
+        <button id="generateQuery">Generate Query</button>
+      </div>
+
+      <div class="card">
+        <div class="output-header">
+          <h2>Generated Query</h2>
+          <button id="copyQuery">📋 Copy</button>
+        </div>
+        <textarea id="outputQuery" readonly></textarea>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
