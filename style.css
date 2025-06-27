@@ -41,6 +41,7 @@ body.dark {
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 .theme-toggle {
@@ -50,77 +51,6 @@ body.dark {
   font-weight: bold;
 }
 
-/* 📘 Query Command Guide */
-.command-guide {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  max-width: 300px;
-  z-index: 99;
-  margin-bottom: 10px;
-}
-
-.command-guide summary {
-  font-weight: bold;
-  cursor: pointer;
-  padding: 10px;
-  background-color: var(--primary-color);
-  color: white;
-  border-radius: 6px;
-  list-style: none;
-}
-
-.command-guide[open] summary::after {
-  content: "▲";
-  float: right;
-}
-
-.command-guide summary::after {
-  content: "▼";
-  float: right;
-}
-
-.guide-content {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #fff;
-  padding: 15px;
-  width: 100%;
-  max-width: 300px;
-  max-height: 400px;
-  overflow-y: auto;
-  border: 1px solid var(--primary-color);
-  border-radius: 0 0 6px 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 100;
-}
-
-body.dark .guide-content {
-  background-color: #333;
-  color: #fff;
-}
-
-.guide-content h4 {
-  margin: 10px 0 4px;
-  color: var(--primary-color);
-}
-
-.guide-content code {
-  display: block;
-  background: #f3f3f3;
-  padding: 6px;
-  border-radius: 4px;
-  margin-bottom: 12px;
-  font-family: monospace;
-  word-wrap: break-word;
-}
-
-body.dark .guide-content code {
-  background: #444;
-}
-
-/* 🌗 Toggle Switch */
 .switch {
   position: relative;
   display: inline-block;
@@ -164,20 +94,20 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Layout */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
   margin-top: 30px;
+  align-items: stretch;
 }
 
 .card {
   background-color: var(--card-bg-light);
   border: 1px solid var(--primary-color);
   border-radius: 10px;
-  padding: 16px 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
 }
@@ -204,13 +134,18 @@ select, textarea, button {
 }
 
 textarea {
+  min-height: 250px;
   resize: vertical;
-  min-height: 180px;
+  padding: 10px;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 
 #outputQuery {
-  resize: vertical;
+  flex-grow: 1;
   min-height: 250px;
+  margin-top: 12px;
+  resize: vertical;
 }
 
 button {
@@ -219,46 +154,98 @@ button {
   border: none;
   cursor: pointer;
   font-weight: bold;
-  margin-top: 12px;
+  margin-top: 16px;
+  padding: 12px 16px;
 }
 
 button:hover {
   opacity: 0.9;
 }
 
-/* Output Header (Query Title + Copy Button) */
 .output-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 30px;
   margin-bottom: 6px;
   width: 100%;
 }
 
 #copyQuery {
   width: auto;
-  padding: 8px 12px;
+  padding: 10px 18px;
   border-radius: 6px;
-  font-size: 16px;
-  background-color: #4caf50; /* Green button */
-  color: white;
-  border: none;
+  font-size: 18px;
+}
+
+/* ───────────── Command Guide Styles ───────────── */
+
+.command-guide {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 300px;
+  z-index: 99;
+}
+
+.command-guide summary {
+  font-weight: bold;
   cursor: pointer;
+  padding: 10px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 10px;
+  list-style: none;
+  font-size: 16px;
 }
 
-#copyQuery:hover {
-  opacity: 0.9;
+.command-guide[open] summary::after {
+  content: " ▲";
+  float: right;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+.command-guide summary::after {
+  content: " ▼";
+  float: right;
+}
 
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.guide-content {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 360px;
+  max-height: 500px;
+  overflow-y: auto;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid var(--primary-color);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+body.dark .guide-content {
+  background-color: #333;
+  color: #fff;
+}
+
+.guide-content h4 {
+  margin: 10px 0 4px;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.guide-content code {
+  display: block;
+  background: #f3f3f3;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  font-family: monospace;
+  word-wrap: break-word;
+}
+
+body.dark .guide-content code {
+  background: #444;
 }
