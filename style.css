@@ -15,7 +15,7 @@ body {
   padding: 40px;
   min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
-  transition: background 0.4s, color 0.4s;
+  transition: background 0.3s, color 0.3s;
 }
 
 body.light {
@@ -29,9 +29,9 @@ body.dark {
 }
 
 .container {
-  width: 100%;
   max-width: 1024px;
   margin: 0 auto;
+  padding: 30px;
 }
 
 h1 {
@@ -80,6 +80,25 @@ button:hover {
   display: flex;
   gap: 10px;
   align-items: center;
+}
+
+.query-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--primary-color);
+}
+
+.copy-btn:hover {
+  opacity: 0.8;
 }
 
 #outputQuery {
