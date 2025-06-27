@@ -12,15 +12,45 @@
       <h1>CWquery Studio</h1>
 
       <div class="guide-and-theme">
-        <!-- Query Command Guide -->
         <details class="command-guide">
           <summary>Command Guide</summary>
           <div class="guide-content">
-            <!-- command guide content remains unchanged -->
+            <h4>fields</h4>
+            <p>Retrieve one or more log fields using functions and operations.</p>
+            <code>fields @log, @logStream, @message, @timestamp</code>
+            <h4>filter</h4>
+            <p>Retrieve log fields based on one or more conditions.</p>
+            <code>filter @message like /(?i)(Exception|error|fail|5dd)/</code>
+            <h4>filterIndex</h4>
+            <p>Limit query to indexed data only using specified field index.</p>
+            <code>filterIndex field_index = value</code>
+            <h4>stats</h4>
+            <p>Calculate aggregate statistics such as count(), avg(), etc.</p>
+            <code>stats count() by bin(5m)</code>
+            <h4>sort</h4>
+            <p>Sort the log fields in ascending or descending order.</p>
+            <code>sort @timestamp asc</code>
+            <h4>limit</h4>
+            <p>Limit the number of log events returned by a query.</p>
+            <code>limit 10</code>
+            <h4>parse</h4>
+            <p>Create ephemeral fields for further processing in query.</p>
+            <code>parse '* - * [*] "* * *" * *' as host, identity, etc.</code>
+            <h4>dedup</h4>
+            <p>Removes duplicate results based on provided fields.</p>
+            <code>dedup @logstream, @timestamp</code>
+            <h4>pattern</h4>
+            <p>Identify and collapse logs into structural patterns.</p>
+            <code>filter @message like /ERROR/ | pattern @message</code>
+            <h4>diff</h4>
+            <p>Compare changes in patterns between time ranges.</p>
+            <code>fields @message | pattern @message | diff</code>
+            <h4>unnest</h4>
+            <p>Flatten a list into multiple records.</p>
+            <code>unnest field into unnested_field</code>
           </div>
         </details>
 
-        <!-- Theme toggle -->
         <div class="theme-toggle">
           <label class="switch">
             <input type="checkbox" id="themeSwitch">
