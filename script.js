@@ -1,7 +1,7 @@
 const queries = {
   "Status Code Query": `
 fields @logStream, @timestamp
-| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"' 
   as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
      statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
      upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
@@ -11,7 +11,7 @@ fields @logStream, @timestamp
 
   "Response Time Query": `
 fields @logStream, @timestamp
-| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"'
+| parse @message '* - [*] * "* * *" * * "*" "*" * * "*" "*" "*" "*" "*" "*" "*"' 
   as remoteAddr, dateTimeString, dateTimeEpoch, requestMethod, url, requestProtocol,
      statusCode, bytes, referrer, userAgent, requestTime, serverName, forwaredFor,
      upstreamTime, upstreamAddr, cacheStatus, upstreacCacheControl,
@@ -24,13 +24,13 @@ document.getElementById("generateQuery").addEventListener("click", () => {
   const selectedQuery = document.getElementById("queryDropdown").value;
   const baseQuery = queries[selectedQuery] || "";
   const rawIds = document.getElementById("eventIds").value.trim();
-  const lines = rawIds.split(/\r?\n/).filter(id => id.trim().length > 0);
+  const ids = rawIds.split(/\r?\n/).map(id => id.trim()).filter(Boolean);
 
-  const eventFilters = lines.map(id => `  eventId = "${id.trim()}"`).join(" or\n");
-  const finalFilter = lines.length > 0 ? `| filter\n${eventFilters}` : "";
+  const filterBlock = ids.length > 0
+    ? `| filter\n${ids.map(id => `  eventId = "${id}"`).join(" or\n")}`
+    : "";
 
   let suffix = "";
-
   if (selectedQuery === "Status Code Query") {
     suffix = `
 | parse statusCode /(?<@status2xx>2..)/
@@ -55,20 +55,20 @@ document.getElementById("generateQuery").addEventListener("click", () => {
 | limit 10000`;
   }
 
-  const fullQuery = `${baseQuery}\n${finalFilter}\n${suffix}`;
+  const fullQuery = `${baseQuery}\n${filterBlock}\n${suffix}`;
   document.getElementById("outputQuery").value = fullQuery;
 });
 
 // Theme toggle
 document.getElementById("themeToggle").addEventListener("change", (e) => {
-  const isDark = e.target.checked;
-  document.body.className = isDark ? "dark" : "light";
+  document.body.classList.toggle("dark", e.target.checked);
+  document.body.classList.toggle("light", !e.target.checked);
 });
 
-// Copy to clipboard
-document.getElementById("copyQueryBtn").addEventListener("click", () => {
+// Copy query to clipboard
+document.getElementById("copyQuery").addEventListener("click", () => {
   const output = document.getElementById("outputQuery");
   output.select();
-  output.setSelectionRange(0, 99999);
   document.execCommand("copy");
+  alert("Query copied to clipboard!");
 });
