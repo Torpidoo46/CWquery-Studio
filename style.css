@@ -1,36 +1,29 @@
-:root {
-  --primary-color: #ff6f00;
-  --background-light: #ffffff;
-  --text-light: #111111;
-  --background-dark: #1a1a1a;
-  --text-dark: #eeeeee;
-  --card-bg-light: #f9f9f9;
-  --card-bg-dark: #2a2a2a;
-}
-
-/* Reset & Box sizing */
-*, *::before, *::after { box-sizing: border-box; }
-
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  transition: background 0.3s, color 0.3s;
+  font-family: Arial, sans-serif;
+  background-color: orange;
 }
-body.light {
-  background-color: var(--background-light);
-  color: var(--text-light);
-}
+
 body.dark {
-  background-color: var(--background-dark);
-  color: var(--text-dark);
+  background-color: #121212;
+  color: white;
+}
+
+body.light {
+  background-color: orange;
+  color: black;
 }
 
 .main-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 30px 20px;
-  min-height: 100vh;
-  box-sizing: border-box;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+}
+
+body.dark .main-container {
+  background-color: #1e1e1e;
 }
 
 .header {
@@ -40,62 +33,84 @@ body.dark {
   flex-wrap: wrap;
 }
 
-.theme-toggle {
+.guide-and-theme {
   display: flex;
+  gap: 1rem;
   align-items: center;
-  gap: 10px;
-  font-weight: bold;
 }
 
-.switch { /* toggle styling */ }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider { /* ... */ }
-input:checked + .slider { background-color: var(--primary-color); }
-/* etc. */
+.command-guide summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: green;
+}
 
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  margin-top: 30px;
+  gap: 2rem;
+  margin-top: 2rem;
 }
+
 .card {
-  background-color: var(--card-bg-light);
-  border: 1px solid var(--primary-color);
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 1rem;
+  background: #f4f4f4;
+  border-radius: 8px;
 }
+
 body.dark .card {
-  background-color: var(--card-bg-dark);
+  background: #2c2c2c;
 }
 
-label { /* styling */ }
-select, textarea, button { /* styling */ }
-
-textarea { resize: vertical; min-height: 120px; }
-
-#outputQuery { min-height: 200px; }
-
-button { /* styling */ }
-button:hover { opacity: 0.9; }
+textarea, select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
 
 .output-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 30px;
-  margin-bottom: 6px;
 }
 
-#copyQuery { /* styling */ }
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
 
-/* Command guide dropdown */
-.command-guide { position: relative; display: inline-block; }
-.command-guide summary { /* styling */ }
-.command-guide[open] summary::after { content: " ▲"; }
-.command-guide summary::after { content: " ▼"; }
-.guide-content { /* styling */ }
-body.dark .guide-content { background-color: #333; color: #fff; }
-.guide-content h4 { margin: 10px 0 4px; color: var(--primary-color); }
-.guide-content code { /* styling */ }
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
