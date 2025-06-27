@@ -16,11 +16,10 @@ body {
   padding: 0;
   min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
-  transition: background 0.4s, color 0.4s;
-  background-color: var(--outer-bg); /* Bold orange outer background */
+  background-color: var(--outer-bg); /* Bold orange fills entire background */
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
 body.light {
@@ -33,26 +32,20 @@ body.dark {
 
 .outer {
   width: 100%;
-  max-width: 960px; /* Desktop size */
-  margin: 40px auto;
-  padding: 20px;
-}
-
-.container {
-  background: var(--background-light);
-  padding: 30px;
-  border-radius: 12px;
+  max-width: 960px; /* Desktop-sized functional box */
+  background-color: var(--background-light);
   border: 2px solid var(--primary-color);
-  width: 100%;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
 }
 
-body.dark .container {
-  background: var(--background-dark);
+body.dark .outer {
+  background-color: var(--background-dark);
 }
 
 h1 {
-  margin: 0 0 20px 0;
+  margin-top: 0;
 }
 
 label, select, textarea, button {
